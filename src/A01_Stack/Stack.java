@@ -11,6 +11,8 @@ public class Stack<T>
         // push ++ / pop --
     }
 
+    //HIER KÖNNTE IHRE WERBUNG STEHEN
+
     /**
      * Oberstes Element entfernen und zurückliefern.
      * Existiert kein Element, wird eine Exception ausgelöst.

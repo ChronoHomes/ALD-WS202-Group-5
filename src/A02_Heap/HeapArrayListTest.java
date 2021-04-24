@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class HeapArrayListTest {
-
 	@Test
 	public void emptyHeap() {
 		TaskHeapArrayList th = new TaskHeapArrayList();
