@@ -10,12 +10,10 @@ public class Stack<T>
         size = 0;   // start with zero with every new stack
         // push ++ / pop --
     }
-
-    //HIER KÖNNTE IHRE WERBUNG STEHEN
-
+    
     /**
-     * Oberstes Element entfernen und zurückliefern.
-     * Existiert kein Element, wird eine Exception ausgelöst.
+     * Oberstes Element entfernen und zurÃ¼ckliefern.
+     * Existiert kein Element, wird eine Exception ausgelÃ¶st.
      * @throws StackEmptyException
      */
     public T pop() throws StackEmptyException {
@@ -32,7 +30,7 @@ public class Stack<T>
     }
 
     /**
-     * Übergebenen T auf Stack (als oberstes Element) speichern.
+     * Ãœbergebenen T auf Stack (als oberstes Element) speichern.
      * @param i data
      */
     public void push(T i) {
