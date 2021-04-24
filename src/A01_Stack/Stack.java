@@ -7,8 +7,8 @@ public class Stack<T>
     private int size;
 
     public Stack() {
-        size = 0;   // start with zero with every new stack
-        // push ++ / pop --
+        first = null;   // top of stack to null for every new stack
+        size = 0;       // start with zero with every new stack | push ++ / pop --
     }
     
     /**
@@ -21,10 +21,10 @@ public class Stack<T>
         if (size <= 0)    // guard clause - to throw StackEmptyException
             throw new StackEmptyException("There is nothing left for you :(");
 
-        T data;                     // create generic variable for data
-        data = first.getData();     // get data from top of stack
-        first = first.getNext();    // update pointer to next in "line"
-        size--;                     // reduce the size of stack
+        T data = null;              // create generic variable for data
+        data = first.getData();     // store data in variable from top of the stack
+        first = first.getNext();    // update pointer to -> "next in line"
+        size--;                     // reduce size of stack
 
         return data;
     }
@@ -35,8 +35,8 @@ public class Stack<T>
      */
     public void push(T i) {
         Node node = new Node(i);    // create new element for stack
-        Node tmp = first;           // store current "first" as temporary node
-        first = node;               // assign new node as first (update it)
+        Node tmp = first;           // store current top of stack as temporary node
+        first = node;               // assign new node as first -> update it
         first.setNext(tmp);         // set reference to previous top -> next to pop
         size++;                     // increase stack size
     }
