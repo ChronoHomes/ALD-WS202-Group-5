@@ -18,7 +18,7 @@ public class Stack<T>
      */
     public T pop() throws StackEmptyException {
 
-        if (size <= 0)    // guard clause - to throw StackEmptyException
+        if (size == 0)    // guard clause - to throw StackEmptyException
             throw new StackEmptyException("There is nothing left for you :(");
 
         T data = null;              // create generic variable for data
@@ -31,14 +31,15 @@ public class Stack<T>
 
     /**
      * Übergebenen T auf Stack (als oberstes Element) speichern.
-     * @param i data
+     * @param element data
      */
-    public void push(T i) {
-        Node node = new Node(i);    // create new element for stack
-        Node tmp = first;           // store current top of stack as temporary node
-        first = node;               // assign new node as first -> update it
-        first.setNext(tmp);         // set reference to previous top -> next to pop
-        size++;                     // increase stack size
+    public void push(T element) {
+        Node<T> node = new Node<>(element); // create new element for stack
+        Node<T> tmp = first;                // store current top of stack as temporary node
+        first = node;                       // assign new node as first -> update it
+        first.setNext(tmp);                 // set reference to previous top -> next to pop
+        tmp = null;
+        size++;                             // increase stack size
     }
 
     /**
