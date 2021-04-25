@@ -40,8 +40,6 @@ public class DoubleLinkedList<T>
             last = node;
 
         }
-
-        System.out.println("nodeCount = " + nodeCount);
         nodeCount++;
     }
 
@@ -238,33 +236,50 @@ public class DoubleLinkedList<T>
         if (current == null)
             throw new CurrentNotSetException();
 
-        System.out.println("size() " + size());
+        System.out.println("called removeCurrent - size() " + size());
+
 
         if (current.equals(first)){
+            System.out.println("current equals first");
             first = current.getNext();
             first.setPrevious(null);
             current = first.getNext();
+            System.out.println("CURRENT - first.getNext() = " + first.getNext());
             nodeCount--;
             return;
         }
         if (current.equals(last)){
+            System.out.println("current equals last");
             last = current.getPrevious();
             last.setNext(null);
-            current = last.getPrevious();
+
+            if (last.getPrevious() == null)
+                current = current;
+            else
+                current = last.getPrevious();
+
+            //TODO - DOES THIS MAKES SENSE????
+            current = current.getPrevious();
             nodeCount--;
             return;
         }
 
+
         Node<T> tmp;
         tmp = current.getPrevious();
         tmp.setNext(current.getNext());
+        System.out.println("STANDARD - current.getNext() = " + current.getNext());
 
         tmp = current.getNext();
         tmp.setPrevious(current.getPrevious());
+        System.out.println("current.getPrevious() = " + current.getPrevious());
 
-        current = current.getNext();
         if (current.getNext() == null)
             current = current.getPrevious();
+        else
+            current = current.getNext();
+
+        System.out.println("STANDARD " + current);
 
         nodeCount--;
 
@@ -280,7 +295,33 @@ public class DoubleLinkedList<T>
         if (current == null)
             throw new CurrentNotSetException();
 
+        System.out.println("size() = " + size());
+
+        if (current.equals(last))
+            System.out.println("LAST");
+        if (current.equals(first))
+            System.out.println("FIRST");
+
+
+        Node<T> newNode = new Node<>(element);
+
+        Node<T> tmpNext = current.getNext();
+        Node<T> tmpCurrent = current;
+
+        tmpCurrent.setNext(newNode);
+
+        if (tmpNext != null)
+            tmpNext.setPrevious(newNode);
+
+        newNode.setPrevious(tmpCurrent);
+        newNode.setNext(tmpNext);
+
+
+        current = newNode;
+        System.out.println("current : " + current);
+
         nodeCount++;
+        System.out.println("nodeCount: " + nodeCount);
     }
 
     public int size(){

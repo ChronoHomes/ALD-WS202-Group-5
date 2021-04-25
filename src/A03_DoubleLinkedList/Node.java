@@ -47,4 +47,5 @@ public class Node <T>
     public int hashCode() {
         return data != null ? data.hashCode() : 0;
     }
+
 }
