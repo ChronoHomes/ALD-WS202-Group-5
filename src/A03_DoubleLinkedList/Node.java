@@ -32,4 +32,19 @@ public class Node <T>
 	public void setPrevious(Node<T> previous) {
 		this.previous = previous;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Node<?> node = (Node<?>) o;
+
+        return data != null ? data.equals(node.data) : node.data == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return data != null ? data.hashCode() : 0;
+    }
 }
