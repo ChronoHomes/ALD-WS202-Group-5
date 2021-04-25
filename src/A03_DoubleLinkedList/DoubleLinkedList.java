@@ -29,16 +29,11 @@ public class DoubleLinkedList<T>
             node.setPrevious(null);
 
         } else {
-
             Node<T> tmpCurrLast = last;
-
             tmpCurrLast.setNext(node); // set new node as next node for the previous first
-
             node.setPrevious(tmpCurrLast); // set current first node as previous
             node.setNext(null);
-
             last = node;
-
         }
         nodeCount++;
     }
@@ -46,7 +41,6 @@ public class DoubleLinkedList<T>
     /**
      * Internen Zeiger für next() zurücksetzen
      */
-    //TODO - check if cast makes sense
     public void reset() {
         current = first;
     }
@@ -54,7 +48,6 @@ public class DoubleLinkedList<T>
     /**
      * analog zur Funktion reset()
      */
-    //TODO - check if cast makes sense
     public void resetToLast() {
         current = last;
     }
@@ -102,20 +95,17 @@ public class DoubleLinkedList<T>
         Node<T> tmp = current;
         current = current.getPrevious();
         return tmp.getData();
-
     }
     
     /**
      * Current-Pointer auf nächste <T> setzen (aber nicht auslesen).
      * Ignoriert still, dass current nicht gesetzt ist.
      */
-    //TODO - check - added CurrentNotSetException to signature - correct?
+    //TODO - check - added CurrentNotSetException to signature - correct -> SK?
     public void moveNext() throws CurrentNotSetException {
 
-        if (current == null)
-            throw new CurrentNotSetException();
+        if (current == null) throw new CurrentNotSetException();
 
-        System.out.println("move next");
         current = current.getNext();
     }
     
@@ -125,8 +115,7 @@ public class DoubleLinkedList<T>
     //TODO - check - added CurrentNotSetException to signature - correct?
     public void movePrevious() throws CurrentNotSetException {
 
-        if (current == null)
-            throw new CurrentNotSetException();
+        if (current == null) throw new CurrentNotSetException();
 
         current = current.getPrevious();
     }
@@ -138,8 +127,7 @@ public class DoubleLinkedList<T>
      */
     public T getCurrent() throws CurrentNotSetException {
 
-        if (current == null)
-            throw new CurrentNotSetException("current list pointer not set");
+        if (current == null) throw new CurrentNotSetException();
 
     	return current.getData();
     }
@@ -149,10 +137,8 @@ public class DoubleLinkedList<T>
      * @param pos Position, Nummerierung startet mit 1
      * @return <T>|null
      */
-    //TODO - get() never used?
     public T get(int pos) {
-        if (first == null)
-            throw new IllegalStateException("list is empty no elements to get");
+        if (first == null) throw new IllegalStateException();
 
         Node<T> currentNode = first;
 
@@ -160,12 +146,11 @@ public class DoubleLinkedList<T>
             if (i == pos){
                 return currentNode.getData();
             }
-
             currentNode = currentNode.getNext();
         }
 
-        //TODO - throw Exception here?
-        return null; // not found :(
+        // throw exception here instead of returning null?
+        return null; // return null if not found for some reason
     }
 
     /**
@@ -175,37 +160,28 @@ public class DoubleLinkedList<T>
      */
     public void remove(int pos) {
 
-
-        System.out.println("remove called // size = " + size() + " pos to delete = " + pos);
-
         Node<T> currentNode = first;
 
         for (int i = 1; i <= size() && currentNode != null; i++) {
-            System.out.println("i = " + i);
             if (i == pos){
                 boolean skip = false;
-                System.out.println("position found");
-
                 if (currentNode.equals(current)){
                     current = null;
-                    System.out.println("current set to null");
                 }
 
                 if (currentNode.equals(first)){
                     first = currentNode.getNext();
                     first.setPrevious(null);
                     skip = true;
-                    System.out.println("delete FIRST");
                 }
 
                 if (currentNode.equals(last)){
                     last = currentNode.getPrevious();
                     last.setNext(null);
                     skip = true;
-                    System.out.println("delete LAST");
                 }
 
-                if (!skip){ //TODO - needed??
+                if (!skip){ //TODO - check if neeeded -> option to directly return in above statements
                     Node<T> tmp = currentNode.getPrevious();
                     if (tmp != null)
                         tmp.setNext(currentNode.getNext());
@@ -215,10 +191,8 @@ public class DoubleLinkedList<T>
                         tmp.setPrevious(currentNode.getPrevious());
                 }
 
-
                 nodeCount--;
                 break; //stop a re-run of the loop for performance once item has been found
-                //TODO - return; ???? or already within the IF???
             }
             currentNode = currentNode.getNext();
         }
@@ -233,23 +207,17 @@ public class DoubleLinkedList<T>
      */
     public void removeCurrent() throws CurrentNotSetException {
 
-        if (current == null)
-            throw new CurrentNotSetException();
-
-        System.out.println("called removeCurrent - size() " + size());
+        if (current == null) throw new CurrentNotSetException();
 
 
         if (current.equals(first)){
-            System.out.println("current equals first");
             first = current.getNext();
             first.setPrevious(null);
             current = first.getNext();
-            System.out.println("CURRENT - first.getNext() = " + first.getNext());
             nodeCount--;
             return;
         }
         if (current.equals(last)){
-            System.out.println("current equals last");
             last = current.getPrevious();
             last.setNext(null);
 
@@ -264,25 +232,19 @@ public class DoubleLinkedList<T>
             return;
         }
 
-
         Node<T> tmp;
         tmp = current.getPrevious();
         tmp.setNext(current.getNext());
-        System.out.println("STANDARD - current.getNext() = " + current.getNext());
 
         tmp = current.getNext();
         tmp.setPrevious(current.getPrevious());
-        System.out.println("current.getPrevious() = " + current.getPrevious());
 
         if (current.getNext() == null)
             current = current.getPrevious();
         else
             current = current.getNext();
 
-        System.out.println("STANDARD " + current);
-
         nodeCount--;
-
     }
     
     /**
@@ -295,33 +257,21 @@ public class DoubleLinkedList<T>
         if (current == null)
             throw new CurrentNotSetException();
 
-        System.out.println("size() = " + size());
-
-        if (current.equals(last))
-            System.out.println("LAST");
-        if (current.equals(first))
-            System.out.println("FIRST");
-
-
+        //TODO - change variable names -> quite confusing currently
         Node<T> newNode = new Node<>(element);
-
         Node<T> tmpNext = current.getNext();
         Node<T> tmpCurrent = current;
+        current = newNode;
 
         tmpCurrent.setNext(newNode);
 
-        if (tmpNext != null)
+        if (tmpNext != null) // not possible to assign if "next" is null
             tmpNext.setPrevious(newNode);
 
         newNode.setPrevious(tmpCurrent);
         newNode.setNext(tmpNext);
 
-
-        current = newNode;
-        System.out.println("current : " + current);
-
         nodeCount++;
-        System.out.println("nodeCount: " + nodeCount);
     }
 
     public int size(){
