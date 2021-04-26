@@ -92,7 +92,7 @@ public class DoubleLinkedList<T>
      */
     public T previous() {   //TODO - same as for next just with first element
 
-        if (current == null)    // return null if current (list-pointer) is not set
+        if (current == null)                // return null if current (list-pointer) is not set
             return null;
 
         Node<T> tmp = current;              // assign value from current element in list to temporary variable
@@ -109,7 +109,7 @@ public class DoubleLinkedList<T>
 
         if (current == null) throw new CurrentNotSetException();    // throw exception if list-pointer is not set
 
-        current = current.getNext();        // move current (list-pointer) to next element in list
+        current = current.getNext();                                // move current (list-pointer) to next element in list
     }
     
     /**
@@ -120,7 +120,7 @@ public class DoubleLinkedList<T>
 
         if (current == null) throw new CurrentNotSetException();    // throw exception if list-pointer is not set
 
-        current = current.getPrevious();    // move current (list-pointer) to previous element in list
+        current = current.getPrevious();                            // move current (list-pointer) to previous element in list
     }
    
     /**
@@ -132,7 +132,7 @@ public class DoubleLinkedList<T>
 
         if (current == null) throw new CurrentNotSetException();    // throw exception if list-pointer is not set
 
-    	return current.getData();   // return value from current element from list-pointer
+    	return current.getData();                                   // return value from current element from list-pointer
     }
 
     /**
@@ -141,18 +141,18 @@ public class DoubleLinkedList<T>
      * @return <T>|null
      */
     public T get(int pos) {     //TODO - write Unit Test to proof get is working
-        if (first == null) throw new IllegalStateException();
+        if (first == null) throw new IllegalStateException();       // throw Exception if list is empty -> to be confirmed if this should work like this
 
-        Node<T> currentNode = first;
+        Node<T> currentNode = first;                                // assign first node as current for element iteration through loop
 
-        for (int i = 1; i < size() && currentNode != null; i++) {
-            if (i == pos){
-                return currentNode.getData();
+        for (int i = 1; i < size() && currentNode != null; i++) {   // for loop while i smaller than size() (=nodeCount) and iteration node not null (safety..)
+            if (i == pos){                                          // check if current element (=currentNode) is same as desired position
+                return currentNode.getData();                       // in case if statement is true return data and exit function
             }
-            currentNode = currentNode.getNext();
+            currentNode = currentNode.getNext();                    // get next node for next loop iteration
         }
 
-        return null;
+        return null;                                                // return null if element was not found for some reason (=should not reach this point)
     }
 
     /**
