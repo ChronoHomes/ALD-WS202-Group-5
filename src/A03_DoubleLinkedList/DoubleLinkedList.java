@@ -140,7 +140,7 @@ public class DoubleLinkedList<T>
      * @param pos Position, Nummerierung startet mit 1
      * @return <T>|null
      */
-    public T get(int pos) {     //TODO - write Unit Test to proof get is working
+    public T get(int pos) {     //TODO - write Unit Test to proof get() is working
         if (first == null) throw new IllegalStateException();       // throw Exception if list is empty -> to be confirmed if this should work like this
 
         Node<T> currentNode = first;                                // assign first node as current for element iteration through loop
@@ -164,38 +164,29 @@ public class DoubleLinkedList<T>
 
         Node<T> currentNode = first;
 
-        for (int i = 1; i <= size() && currentNode != null; i++) {
+        for (int i = 1; i <= size() && currentNode != null; i++) { // another option would be -> while(currentNode != null) or only the size() in the for loop
+
             if (i == pos){
-                boolean skip = false;
+
+                if (currentNode.getPrevious() != null)  // do not try to set next on a null
+                    currentNode.getPrevious().setNext(currentNode.getNext());
+                else // first found -> if (currentNode.equals(first)){}
+                    first = currentNode.getNext();
+
+                if (currentNode.getNext() != null)      // do not try to set previous on a null
+                    currentNode.getNext().setPrevious(currentNode.getPrevious());
+                else // last found -> if (currentNode.equals(last)){}
+                    last = currentNode.getPrevious();
+
+
                 if (currentNode.equals(current)){
                     current = null;
-                }
-
-                if (currentNode.equals(first)){
-                    first = currentNode.getNext();
-                    first.setPrevious(null);
-                    skip = true;
-                }
-
-                if (currentNode.equals(last)){
-                    last = currentNode.getPrevious();
-                    last.setNext(null);
-                    skip = true;
-                }
-
-                if (!skip){ //TODO - check if neeeded -> option to directly return in above statements
-                    Node<T> tmp = currentNode.getPrevious();
-                    if (tmp != null)
-                        tmp.setNext(currentNode.getNext());
-
-                    tmp = currentNode.getNext();
-                    if (tmp != null)
-                        tmp.setPrevious(currentNode.getPrevious());
                 }
 
                 nodeCount--;
                 break; //stop a re-run of the loop for performance once item has been found
             }
+
             currentNode = currentNode.getNext();
         }
 
