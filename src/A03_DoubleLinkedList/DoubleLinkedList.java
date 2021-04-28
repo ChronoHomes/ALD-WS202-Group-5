@@ -162,24 +162,24 @@ public class DoubleLinkedList<T>
      */
     public void remove(int pos) {
 
-        Node<T> currentNode = first;
+        Node<T> currentNode = first;    // start with first node in loop
 
         for (int i = 1; i <= size() && currentNode != null; i++) { // another option would be -> while(currentNode != null) or only the size() in the for loop
 
-            if (i == pos){
+            if (i == pos){      // check if position has been found
 
                 if (currentNode.getPrevious() != null)  // do not try to set next on a null
-                    currentNode.getPrevious().setNext(currentNode.getNext());
+                    currentNode.getPrevious().setNext(currentNode.getNext()); // set from previous element the new next "unlink" the element which should be removed
                 else // first found -> if (currentNode.equals(first)){}
                     first = currentNode.getNext();
 
                 if (currentNode.getNext() != null)      // do not try to set previous on a null
-                    currentNode.getNext().setPrevious(currentNode.getPrevious());
+                    currentNode.getNext().setPrevious(currentNode.getPrevious());  // set from next element the new previous "unlink" the element which should be removed
                 else // last found -> if (currentNode.equals(last)){}
                     last = currentNode.getPrevious();
 
 
-                if (currentNode.equals(current)){
+                if (currentNode.equals(current)){   // check if current element should be deleted if yes set pointer to null
                     current = null;
                 }
 
@@ -202,6 +202,32 @@ public class DoubleLinkedList<T>
 
         if (current == null) throw new CurrentNotSetException();
 
+
+        // --------------------------------------------------------------------
+        // same as remove just with a bit added current pointer handling
+        // TODO - check if possible to "merge" removeCurrent() and remove since both are almost the same...
+        // -------------------------------
+
+        if (current.getPrevious() != null)  // do not try to set next on a null
+            current.getPrevious().setNext(current.getNext()); // set from previous element the new next "unlink" the element which should be removed
+        else // first found -> if (currentNode.equals(first)){}
+            first = current.getNext();
+
+        if (current.getNext() != null) {     // do not try to set previous on a null
+            current.getNext().setPrevious(current.getPrevious());  // set from next element the new previous "unlink" the element which should be removed
+            current = current.getNext(); //current pointer handling
+        }
+        else { // last found -> if (currentNode.equals(last)){}
+            last = current.getPrevious();
+            current = current.getPrevious(); //current pointer handling
+        }
+
+        nodeCount--;
+
+        // --------------------------------------------------------------------
+
+
+        /*
 
         if (current.equals(first)){
             first = current.getNext();
@@ -238,6 +264,8 @@ public class DoubleLinkedList<T>
             current = current.getNext();
 
         nodeCount--;
+
+         */
     }
     
     /**
@@ -251,18 +279,20 @@ public class DoubleLinkedList<T>
             throw new CurrentNotSetException();
 
         //TODO - change variable names -> quite confusing currently
-        Node<T> newNode = new Node<>(element);
+        Node<T> insertNode = new Node<>(element);
         Node<T> tmpNext = current.getNext();
         Node<T> tmpCurrent = current;
-        current = newNode;
 
-        tmpCurrent.setNext(newNode);
+
+        tmpCurrent.setNext(insertNode);
 
         if (tmpNext != null) // not possible to assign if "next" is null
-            tmpNext.setPrevious(newNode);
+            tmpNext.setPrevious(insertNode);
 
-        newNode.setPrevious(tmpCurrent);
-        newNode.setNext(tmpNext);
+        insertNode.setPrevious(tmpCurrent);
+        insertNode.setNext(tmpNext);
+
+        current = insertNode;
 
         nodeCount++;
     }
