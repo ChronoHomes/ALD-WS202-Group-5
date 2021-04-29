@@ -202,7 +202,6 @@ public class DoubleLinkedList<T>
 
         if (current == null) throw new CurrentNotSetException();
 
-
         // --------------------------------------------------------------------
         // same as remove just with a bit added current pointer handling
         // TODO - check if possible to "merge" removeCurrent() and remove since both are almost the same...
@@ -211,61 +210,18 @@ public class DoubleLinkedList<T>
         if (current.getPrevious() != null)  // do not try to set next on a null
             current.getPrevious().setNext(current.getNext()); // set from previous element the new next "unlink" the element which should be removed
         else // first found -> if (currentNode.equals(first)){}
-            first = current.getNext();
+            first = current.getNext(); // current should be removed therefore "next of current" is new first if current equals first
 
         if (current.getNext() != null) {     // do not try to set previous on a null
             current.getNext().setPrevious(current.getPrevious());  // set from next element the new previous "unlink" the element which should be removed
             current = current.getNext(); //current pointer handling
-        }
-        else { // last found -> if (currentNode.equals(last)){}
+        } else { // last found -> if (currentNode.equals(last)){}
             last = current.getPrevious();
             current = current.getPrevious(); //current pointer handling
         }
 
         nodeCount--;
 
-        // --------------------------------------------------------------------
-
-
-        /*
-
-        if (current.equals(first)){
-            first = current.getNext();
-            first.setPrevious(null);
-            current = first.getNext();
-            nodeCount--;
-            return;
-        }
-        if (current.equals(last)){
-            last = current.getPrevious();
-            last.setNext(null);
-
-            if (last.getPrevious() == null)
-                current = current;
-            else
-                current = last.getPrevious();
-
-            //TODO - DOES THIS MAKES SENSE????
-            current = current.getPrevious();
-            nodeCount--;
-            return;
-        }
-
-        Node<T> tmp;
-        tmp = current.getPrevious();
-        tmp.setNext(current.getNext());
-
-        tmp = current.getNext();
-        tmp.setPrevious(current.getPrevious());
-
-        if (current.getNext() == null)
-            current = current.getPrevious();
-        else
-            current = current.getNext();
-
-        nodeCount--;
-
-         */
     }
     
     /**
