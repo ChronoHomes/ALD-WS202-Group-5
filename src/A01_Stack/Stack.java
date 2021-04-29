@@ -7,40 +7,39 @@ public class Stack<T>
     private int size;
 
     public Stack() {
-        size = 0;   // start with zero with every new stack
-        // push ++ / pop --
+        first = null;   // top of stack to null for every new stack
+        size = 0;       // start with zero with every new stack | push ++ / pop --
     }
-
-    //HIER KÖNNTE IHRE WERBUNG STEHEN
-
+    
     /**
-     * Oberstes Element entfernen und zurückliefern.
-     * Existiert kein Element, wird eine Exception ausgelöst.
+     * Oberstes Element entfernen und zurÃ¼ckliefern.
+     * Existiert kein Element, wird eine Exception ausgelÃ¶st.
      * @throws StackEmptyException
      */
     public T pop() throws StackEmptyException {
 
-        if (size <= 0)    // guard clause - to throw StackEmptyException
+        if (size == 0)    // guard clause - to throw StackEmptyException
             throw new StackEmptyException("There is nothing left for you :(");
 
-        T data;                     // create generic variable for data
-        data = first.getData();     // get data from top of stack
-        first = first.getNext();    // update pointer to next in "line"
-        size--;                     // reduce the size of stack
+        T data = null;              // create generic variable for data
+        data = first.getData();     // store data in variable from top of the stack
+        first = first.getNext();    // update pointer to -> "next in line"
+        size--;                     // reduce size of stack
 
         return data;
     }
 
     /**
-     * Übergebenen T auf Stack (als oberstes Element) speichern.
-     * @param i data
+     * Ãœbergebenen T auf Stack (als oberstes Element) speichern.
+     * @param element data
      */
-    public void push(T i) {
-        Node node = new Node(i);    // create new element for stack
-        Node tmp = first;           // store current "first" as temporary node
-        first = node;               // assign new node as first (update it)
-        first.setNext(tmp);         // set reference to previous top -> next to pop
-        size++;                     // increase stack size
+    public void push(T element) {
+        Node<T> node = new Node<>(element); // create new element for stack
+        Node<T> tmp = first;                // store current top of stack as temporary node
+        first = node;                       // assign new node as first -> update it
+        first.setNext(tmp);                 // set reference to previous top -> next to pop
+        tmp = null;
+        size++;                             // increase stack size
     }
 
     /**
