@@ -1,6 +1,7 @@
 package A02_Heap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TaskHeapArrayList {
 
@@ -14,6 +15,7 @@ public class TaskHeapArrayList {
 	 * Konstruktor
 	 */
 	public TaskHeapArrayList() {
+		this.tasks = new ArrayList<>();
 
 	}
 
@@ -22,8 +24,13 @@ public class TaskHeapArrayList {
 	 * @param t Einzufügender Task
 	 */
 	public void insert(Task t) {
-		// TODO: Your implementation
-		// TEST
+		tasks.add(t);
+		System.out.println("tasks.size() = " + tasks.size());
+
+		swim(tasks.size()-1);
+
+		System.out.println("printHeap");
+		printHeap();
 	}
 
 	/**
@@ -32,15 +39,52 @@ public class TaskHeapArrayList {
 	 */
 	public Task remove() {
 		// TODO: Your implementation
-		return null;
+
+		Task t = null;
+
+		if (tasks.size() != 0){
+			t = tasks.get(0);
+			tasks.remove(0);
+		}
+		System.out.println("remove: " + tasks.get(0));
+
+		sink(0);
+
+		return t;
 	}
 
 	private void swim(int pos) {
 		// TODO: Your implementation of swim
+
+	//	if (tasks.size() == 1)
+	//		return;
+
+	//	System.out.println("prio(pos) = " + prio(pos));
+	//	System.out.println("prio(parent(prio(pos))) = " + prio(parent(pos)));
+
+
+		while (prio(parent(pos)) > prio(pos)){
+			exchange(parent(pos), pos);
+			swim(parent(pos));
+		}
+
 	}
 
 	private void sink(int pos) {
 		// TODO: Your implementation of sink
+
+		// if parent is larger than one or both children
+
+		// hasChildren(pos)
+
+		while (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))){
+			System.out.println("sink while");
+			exchange(pos, minChild(pos));
+			sink(minChild(pos));
+
+
+		}
+
 	}
 
 	private int parent(int pos) {
@@ -83,6 +127,20 @@ public class TaskHeapArrayList {
 			min = r;
 		}
 		return min;
+	}
+
+	//TODO - better solution?
+	public void printHeap(){
+
+		//System.out.println(tasks.toString());
+
+		for(int i = 0; i <= tasks.size(); i++){
+			for(int j = 0; j < Math.pow(2,i) && j + Math.pow(2,i) <= tasks.size(); j++){
+				System.out.print(tasks.get(j + (int) Math.pow(2, i) - 1).getPriority() + "-" + tasks.get(j + (int) Math.pow(2, i) - 1).getId() + "   ");
+			}
+			System.out.println();
+		}
+
 	}
 
 }
