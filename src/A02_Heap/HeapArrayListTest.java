@@ -38,26 +38,6 @@ public class HeapArrayListTest {
 		assertNull(th.remove());
 	}
 
-
-/*	@Test
-	public void insertTest() {
-		TaskHeapArrayList th = new TaskHeapArrayList();
-		th.insert(new Task(1, 12));
-		th.insert(new Task(2, 2));
-		th.insert(new Task(3, 14));
-		th.insert(new Task(4, 3));
-		th.insert(new Task(5, 5));
-		th.insert(new Task(6, 6));
-		th.insert(new Task(7, 1));
-		th.insert(new Task(8, 9));
-		th.insert(new Task(9, 30));
-		th.insert(new Task(10, 8));
-		th.insert(new Task(11, 13));
-		th.insert(new Task(12, 1));
-
-	}*/
-
-	
 	@Test
 	public void removeTest2() {
 		TaskHeapArrayList th = new TaskHeapArrayList();

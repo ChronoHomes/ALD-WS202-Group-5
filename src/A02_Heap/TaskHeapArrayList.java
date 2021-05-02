@@ -17,8 +17,8 @@ public class TaskHeapArrayList {
 	public TaskHeapArrayList() {
 		this.tasks = new ArrayList<>();
 
-		//Test for Offset Calc
-		//tasks.add(new Task(0, Integer.MIN_VALUE));
+		//add initial element for index 0, otherwise parent and child calc does not work
+		//tasks.add(new Task(Integer.MIN_VALUE, Integer.MIN_VALUE));
 		tasks.add(new Task(0, 0));
 	}
 
@@ -44,9 +44,7 @@ public class TaskHeapArrayList {
 	public Task remove() {
 		// TODO: Your implementation
 
-		if (tasks.size() == 0)
-			return null;
-		if (tasks.size() == 1)
+		if (tasks.size() == 0 || tasks.size() == 1) //compensate no element and initial element for index offset
 			return null;
 
 
@@ -110,16 +108,18 @@ public class TaskHeapArrayList {
 				if (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {
 					exchange(pos, minChild(pos));
 
-					sink(minChild(pos)); //????
+					sink(minChild(pos));
 				}
 			} else if (exists(left(pos))){
 				if (prio(pos) > prio(left(pos))){
 					exchange(pos, left(pos));
+					// no need to call recursive
 				}
 
 			} else if (exists(right(pos))){
 				if (prio(pos) > prio(right(pos))){
 					exchange(pos, right(pos));
+					// no need to call recursive
 				}
 			}
 
@@ -191,12 +191,12 @@ public class TaskHeapArrayList {
 
 		System.out.println(tasks.toString());
 
-/*		for(int i = 0; i <= tasks.size(); i++){
+		for(int i = 0; i <= tasks.size(); i++){
 			for(int j = 0; j < Math.pow(2,i) && j + Math.pow(2,i) <= tasks.size(); j++){
 				System.out.print(tasks.get(j + (int) Math.pow(2, i) - 1).getPriority() + "-" + tasks.get(j + (int) Math.pow(2, i) - 1).getId() + "   ");
 			}
 			System.out.println();
-		}*/
+		}
 
 	}
 
