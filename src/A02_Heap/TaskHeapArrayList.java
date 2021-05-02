@@ -17,6 +17,9 @@ public class TaskHeapArrayList {
 	public TaskHeapArrayList() {
 		this.tasks = new ArrayList<>();
 
+		//Test for Offset Calc
+		//tasks.add(new Task(0, Integer.MIN_VALUE));
+		tasks.add(new Task(0, 0));
 	}
 
 	/**
@@ -25,7 +28,8 @@ public class TaskHeapArrayList {
 	 */
 	public void insert(Task t) {
 		tasks.add(t);
-		System.out.println("tasks.size() = " + tasks.size());
+		System.out.println(tasks.size());
+		System.out.println("add - prio: " + t.getPriority() + " - id: " + t.getId());
 
 		swim(tasks.size()-1);
 
@@ -40,15 +44,19 @@ public class TaskHeapArrayList {
 	public Task remove() {
 		// TODO: Your implementation
 
-		Task t = null;
+		if (tasks.size() == 0)
+			return null;
+		if (tasks.size() == 1)
+			return null;
 
-		if (tasks.size() != 0){
-			t = tasks.get(0);
-			tasks.remove(0);
-		}
-		System.out.println("remove: " + tasks.get(0));
 
-		sink(0);
+		Task t = tasks.get(1);
+
+		System.out.println("remove: " + tasks.get(1));
+		exchange(1, tasks.size()-1); //exchange element which should be removed with last elemtn and then remove it
+		tasks.remove(tasks.size()-1);
+
+		sink(1);
 
 		return t;
 	}
@@ -62,11 +70,25 @@ public class TaskHeapArrayList {
 	//	System.out.println("prio(pos) = " + prio(pos));
 	//	System.out.println("prio(parent(prio(pos))) = " + prio(parent(pos)));
 
+		if (prio(parent(pos)) < prio(pos))
+			return;
 
-		while (prio(parent(pos)) > prio(pos)){
-			exchange(parent(pos), pos);
-			swim(parent(pos));
-		}
+	//	while (prio(parent(pos)) > prio(pos)){
+
+			System.out.println("\tpos: " + pos + " prio: " + prio(pos));
+			System.out.println("\tparent: " + parent(pos) + " prio: " + prio(parent(pos)));
+
+		exchange(parent(pos), pos);
+		swim(parent(pos));
+	//	}
+
+/*
+		if (prio(parent(pos)) < prio(pos))
+			return;
+
+		exchange(parent(pos), pos);
+		swim(parent(pos));
+ */
 
 	}
 
@@ -75,15 +97,46 @@ public class TaskHeapArrayList {
 
 		// if parent is larger than one or both children
 
-		// hasChildren(pos)
+		System.out.println("SINK");
+	//	System.out.println("prio(pos) = " + prio(pos));
+	//	System.out.println("prio(left(pos)) = " + prio(left(pos)));
+	//	System.out.println("prio(right(pos)) = " + prio(right(pos)));
 
-		while (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))){
-			System.out.println("sink while");
-			exchange(pos, minChild(pos));
-			sink(minChild(pos));
 
+
+		if (hasChildren(pos)){
+
+			if (exists(left(pos)) && exists(right(pos))) {
+				if (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {
+					exchange(pos, minChild(pos));
+
+					sink(minChild(pos)); //????
+				}
+			} else if (exists(left(pos))){
+				if (prio(pos) > prio(left(pos))){
+					exchange(pos, left(pos));
+				}
+
+			} else if (exists(right(pos))){
+				if (prio(pos) > prio(right(pos))){
+					exchange(pos, right(pos));
+				}
+			}
 
 		}
+
+
+/*		if (hasChildren(pos)) {
+			while (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {
+				System.out.println("sink while");
+				exchange(pos, minChild(pos));
+
+				if (hasChildren(minChild(pos)))
+					sink(minChild(pos));
+
+
+			}
+		}*/
 
 	}
 
@@ -112,6 +165,10 @@ public class TaskHeapArrayList {
 		temp = tasks.get(pos1);
 		tasks.set(pos1, tasks.get(pos2));
 		tasks.set(pos2, temp);
+
+		System.out.println("pos: " + pos1 + " exch " + pos2);
+		System.out.println("prio: " + prio(pos1) + " exch " + prio(pos2));
+
 	}
 
 	private boolean hasChildren(int pos) {
@@ -132,14 +189,14 @@ public class TaskHeapArrayList {
 	//TODO - better solution?
 	public void printHeap(){
 
-		//System.out.println(tasks.toString());
+		System.out.println(tasks.toString());
 
-		for(int i = 0; i <= tasks.size(); i++){
+/*		for(int i = 0; i <= tasks.size(); i++){
 			for(int j = 0; j < Math.pow(2,i) && j + Math.pow(2,i) <= tasks.size(); j++){
 				System.out.print(tasks.get(j + (int) Math.pow(2, i) - 1).getPriority() + "-" + tasks.get(j + (int) Math.pow(2, i) - 1).getId() + "   ");
 			}
 			System.out.println();
-		}
+		}*/
 
 	}
 
