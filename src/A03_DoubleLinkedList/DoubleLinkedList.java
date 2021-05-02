@@ -207,6 +207,8 @@ public class DoubleLinkedList<T>
         // TODO - check if possible to "merge" removeCurrent() and remove since both are almost the same...
         // -------------------------------
 
+        // TODO - check if still works if last and only element is deleted
+
         if (current.getPrevious() != null)  // do not try to set next on a null
             current.getPrevious().setNext(current.getNext()); // set from previous element the new next "unlink" the element which should be removed
         else // first found -> if (currentNode.equals(first)){}
