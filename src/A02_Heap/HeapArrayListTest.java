@@ -20,21 +20,12 @@ public class HeapArrayListTest {
 		th.insert(new Task(4, 3));
 		th.insert(new Task(5, 5));
 		th.insert(new Task(6, 6));
-		System.out.println("all inserted");
-		th.printHeap();
 		assertEquals(2, th.remove().getId());
-		th.printHeap();
 		assertEquals(4, th.remove().getId());
-
-		th.printHeap();
 		assertEquals(5, th.remove().getId());
-		th.printHeap();
 		assertEquals(6, th.remove().getId());
-		th.printHeap();
 		assertEquals(1, th.remove().getId());
-		th.printHeap();
 		assertEquals(3, th.remove().getId());
-		th.printHeap();
 		assertNull(th.remove());
 	}
 

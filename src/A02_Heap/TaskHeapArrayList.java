@@ -1,7 +1,6 @@
 package A02_Heap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TaskHeapArrayList {
 
@@ -16,10 +15,7 @@ public class TaskHeapArrayList {
 	 */
 	public TaskHeapArrayList() {
 		this.tasks = new ArrayList<>();
-
-		//add initial element for index 0, otherwise parent and child calc does not work
-		//tasks.add(new Task(Integer.MIN_VALUE, Integer.MIN_VALUE));
-		tasks.add(new Task(0, 0));
+		tasks.add(new Task(Integer.MIN_VALUE, Integer.MIN_VALUE)); //add dummy element for index 0, otherwise calculation (parent, left, right) does not work
 	}
 
 	/**
@@ -28,13 +24,7 @@ public class TaskHeapArrayList {
 	 */
 	public void insert(Task t) {
 		tasks.add(t);
-		System.out.println(tasks.size());
-		System.out.println("add - prio: " + t.getPriority() + " - id: " + t.getId());
-
-		swim(tasks.size()-1);
-
-		System.out.println("printHeap");
-		printHeap();
+		swim(tasks.size()-1); // "swim up" new added element // new elements are initially always added in the last position
 	}
 
 	/**
@@ -42,101 +32,48 @@ public class TaskHeapArrayList {
 	 * @return Task mit kleinster Priorität
 	 */
 	public Task remove() {
-		// TODO: Your implementation
 
-		if (tasks.size() == 0 || tasks.size() == 1) //compensate no element and initial element for index offset
+		if (tasks.size() == 0 || tasks.size() == 1) // return null if no element is in stack // == 1 to return null if only dummy element is there
 			return null;
 
+		Task t = tasks.get(1);				// save first element in variable before it is removed
+		//System.out.println("remove: " + tasks.get(1));
+		exchange(1, tasks.size()-1); 		// exchange element which should be removed with last element and then remove it
+		tasks.remove(tasks.size()-1);	// remove element from heap (first and last where exchanged then "new" last is removed)
+		sink(1);						// check / restore heap property
 
-		Task t = tasks.get(1);
-
-		System.out.println("remove: " + tasks.get(1));
-		exchange(1, tasks.size()-1); //exchange element which should be removed with last elemtn and then remove it
-		tasks.remove(tasks.size()-1);
-
-		sink(1);
-
-		return t;
+		return t;							// return element which was removed from heap
 	}
 
 	private void swim(int pos) {
-		// TODO: Your implementation of swim
 
-	//	if (tasks.size() == 1)
-	//		return;
-
-	//	System.out.println("prio(pos) = " + prio(pos));
-	//	System.out.println("prio(parent(prio(pos))) = " + prio(parent(pos)));
-
-		if (prio(parent(pos)) < prio(pos))
+		if (prio(parent(pos)) < prio(pos))	// check if "swim up" is required if not return from function // termination for recursive call
 			return;
 
-	//	while (prio(parent(pos)) > prio(pos)){
-
-			System.out.println("\tpos: " + pos + " prio: " + prio(pos));
-			System.out.println("\tparent: " + parent(pos) + " prio: " + prio(parent(pos)));
-
-		exchange(parent(pos), pos);
-		swim(parent(pos));
-	//	}
-
-/*
-		if (prio(parent(pos)) < prio(pos))
-			return;
-
-		exchange(parent(pos), pos);
-		swim(parent(pos));
- */
+		exchange(parent(pos), pos);			// position change with parent element
+		//System.out.println("\t\t\tRecursive Call - SWIM");
+		swim(parent(pos));					// recursive function call
 
 	}
 
 	private void sink(int pos) {
-		// TODO: Your implementation of sink
 
-		// if parent is larger than one or both children
+		//System.out.println("SINK");
 
-		System.out.println("SINK");
-	//	System.out.println("prio(pos) = " + prio(pos));
-	//	System.out.println("prio(left(pos)) = " + prio(left(pos)));
-	//	System.out.println("prio(right(pos)) = " + prio(right(pos)));
-
-
-
-		if (hasChildren(pos)){
-
-			if (exists(left(pos)) && exists(right(pos))) {
-				if (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {
-					exchange(pos, minChild(pos));
-
-					sink(minChild(pos));
-				}
-			} else if (exists(left(pos))){
-				if (prio(pos) > prio(left(pos))){
-					exchange(pos, left(pos));
-					// no need to call recursive
-				}
-
-			} else if (exists(right(pos))){
-				if (prio(pos) > prio(right(pos))){
-					exchange(pos, right(pos));
-					// no need to call recursive
-				}
+		if (exists(left(pos)) && exists(right(pos))) {
+			if (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {	// check if parent is greater than any child
+				exchange(pos, minChild(pos));									// exchange parent with smallest child
+				//System.out.println("\t\t\tRecursive Call - SINK");
+				sink(minChild(pos));											// recursive function call
 			}
-
+		} else if (exists(left(pos))){					// check if child exists // hasChildren() function another option (=harder to read for me)
+			if (prio(pos) > prio(left(pos)))			// check if parent is greater than child
+				exchange(pos, left(pos));				// exchange parent with child if it is greater
 		}
-
-
-/*		if (hasChildren(pos)) {
-			while (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {
-				System.out.println("sink while");
-				exchange(pos, minChild(pos));
-
-				if (hasChildren(minChild(pos)))
-					sink(minChild(pos));
-
-
-			}
-		}*/
+		// else if (exists(right(pos))){		// Should not be needed if both child's do not exist only left exists
+		// 	if (prio(pos) > prio(right(pos)))
+		// 		exchange(pos, right(pos));
+		// }
 
 	}
 
@@ -165,10 +102,6 @@ public class TaskHeapArrayList {
 		temp = tasks.get(pos1);
 		tasks.set(pos1, tasks.get(pos2));
 		tasks.set(pos2, temp);
-
-		System.out.println("pos: " + pos1 + " exch " + pos2);
-		System.out.println("prio: " + prio(pos1) + " exch " + prio(pos2));
-
 	}
 
 	private boolean hasChildren(int pos) {
@@ -186,18 +119,13 @@ public class TaskHeapArrayList {
 		return min;
 	}
 
-	//TODO - better solution?
 	public void printHeap(){
+		System.out.println(tasks.toString());	// print heap for debugging
 
-		System.out.println(tasks.toString());
-
-		for(int i = 0; i <= tasks.size(); i++){
-			for(int j = 0; j < Math.pow(2,i) && j + Math.pow(2,i) <= tasks.size(); j++){
-				System.out.print(tasks.get(j + (int) Math.pow(2, i) - 1).getPriority() + "-" + tasks.get(j + (int) Math.pow(2, i) - 1).getId() + "   ");
-			}
-			System.out.println();
-		}
+		//double calc = Math.log(tasks.size()) / Math.log(2) + 1;
+		//int rows = (int) calc;
 
 	}
+
 
 }
