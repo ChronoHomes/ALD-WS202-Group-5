@@ -104,7 +104,7 @@ public class DoubleLinkedList<T>
      * Current-Pointer auf nächste <T> setzen (aber nicht auslesen).
      * Ignoriert still, dass current nicht gesetzt ist.
      */
-    //TODO - check - added CurrentNotSetException to signature - correct -> SK?
+    //TODO - check - added CurrentNotSetException to signature - correct?
     public void moveNext() throws CurrentNotSetException {
 
         if (current == null) throw new CurrentNotSetException();    // throw exception if list-pointer is not set
@@ -231,16 +231,14 @@ public class DoubleLinkedList<T>
      * und setzt dann die neu eingefügte <T> als aktuelle (current) <T>.
      * @throws CurrentNotSetException 
      */
-    public void insertAfterCurrentAndMove(T element) throws CurrentNotSetException {
+    public void insertAfterCurrentAndMove(T element) throws CurrentNotSetException { //TODO - refactor
 
         if (current == null)
             throw new CurrentNotSetException();
 
-        //TODO - change variable names -> quite confusing currently
         Node<T> insertNode = new Node<>(element);
         Node<T> tmpNext = current.getNext();
         Node<T> tmpCurrent = current;
-
 
         tmpCurrent.setNext(insertNode);
 
