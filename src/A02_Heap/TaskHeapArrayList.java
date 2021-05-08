@@ -14,8 +14,7 @@ public class TaskHeapArrayList {
 	 * Konstruktor
 	 */
 	public TaskHeapArrayList() {
-		this.tasks = new ArrayList<>();		// create new ArrayList
-																	// TODO - better solution?
+		this.tasks = new ArrayList<>();								// create new ArrayList
 		tasks.add(new Task(Integer.MIN_VALUE, Integer.MIN_VALUE));	// add dummy element for index 0, otherwise calculation (parent, left, right) does not work
 	}
 
@@ -56,7 +55,7 @@ public class TaskHeapArrayList {
 
 	private void sink(int pos) {
 
-		if (exists(left(pos)) && exists(right(pos))) {
+		if (exists(left(pos)) && exists(right(pos))) {							// check if both childs exist
 			if (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {	// check if parent is greater than any child
 				exchange(pos, minChild(pos));									// exchange parent with smallest child
 				sink(minChild(pos));											// recursive function call
@@ -64,7 +63,7 @@ public class TaskHeapArrayList {
 		} else if (exists(left(pos))){					// check if child exists // hasChildren() function another option (=harder to read for me)
 			if (prio(pos) > prio(left(pos)))			// check if parent is greater than child
 				exchange(pos, left(pos));				// exchange parent with child if it is greater
-														// recursive function call not needed
+														// recursive function call not needed since "end of tree" -> due single child -> heap property
 		}
 
 	}
