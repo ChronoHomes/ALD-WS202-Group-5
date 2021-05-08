@@ -12,8 +12,7 @@ public class Wörterbuch {
 	 */
 	private Wort root;
 
-
-	private ArrayList<Wort> list = new ArrayList<>();
+	private ArrayList<Wort> list = new ArrayList<>(); // Helper for createList() - is required because of the recursion
 
 	public Wort getRoot() {
 		return root;
@@ -25,8 +24,13 @@ public class Wörterbuch {
 	 * @return Zahl der Wörter (=Anzahl der Elemente)
 	 */
 	public int countWordsInSubTree(Wort w) {
-		
-		return 0;
+
+		ArrayList<Wort> words = createList(w); // returns an Arraylist
+
+		if (words == null)  // In case of a NullPointerException
+			return 0;
+
+		return words.size(); // return the number of elements
 	}
 
 	/**
@@ -36,14 +40,20 @@ public class Wörterbuch {
 	 */
 	public Set<String> getWordsWithPrefix(String prefix) {
 
-		Set<String> prefixset = new HashSet<>();
+		Set<String> prefixset = new HashSet<>(); // Creating return attribute
 
-		System.out.println(root.toString());
-		createList(root);
+		ArrayList<Wort> words = createList(root); // returns an Arraylist
 
+		for (Wort word : words) {
+			if (word.getWort().startsWith(prefix)){
+				prefixset.add(word.getWort());    // words with prefix will be added to the list
 
+				// For Testing:
+				// System.out.println("getWordsWithPrefix TEST - " + word.getWort());
+			}
+		}
 
-		return null;
+		return prefixset;
 	}
 
 	// create list for further processing :)
@@ -54,11 +64,11 @@ public class Wörterbuch {
 			return null;
 
 		list.add(wort);
-		System.out.println(wort);
+		// System.out.println("createList TEST - " + wort);
 		createList(wort.getLeft());
 		createList(wort.getRight());
 
-		System.out.println("size: " + list.size());
+		// System.out.println("size: " + list.size());
 		return list;
 
 	}
