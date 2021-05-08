@@ -2,7 +2,7 @@ package A02_Heap;
 
 import java.util.ArrayList;
 
-public class TaskHeapArrayList {
+public class TaskHeapArrayList_withDebugMessages {
 
 	/**
 	 * Internes Task-Array für den Heap
@@ -13,10 +13,10 @@ public class TaskHeapArrayList {
 	/**
 	 * Konstruktor
 	 */
-	public TaskHeapArrayList() {
-		this.tasks = new ArrayList<>();		// create new ArrayList
-																	// TODO - better solution?
-		tasks.add(new Task(Integer.MIN_VALUE, Integer.MIN_VALUE));	// add dummy element for index 0, otherwise calculation (parent, left, right) does not work
+	public TaskHeapArrayList_withDebugMessages() {
+		this.tasks = new ArrayList<>();
+		//TODO - better solution?
+		tasks.add(new Task(Integer.MIN_VALUE, Integer.MIN_VALUE)); //add dummy element for index 0, otherwise calculation (parent, left, right) does not work
 	}
 
 	/**
@@ -24,8 +24,8 @@ public class TaskHeapArrayList {
 	 * @param t Einzufügender Task
 	 */
 	public void insert(Task t) {
-		tasks.add(t);					// add new element to ArrayList
-		swim(tasks.size()-1);		// "swim up" new added element // new elements are initially always added at the last position
+		tasks.add(t);
+		swim(tasks.size()-1); // "swim up" new added element // new elements are initially always added in the last position
 	}
 
 	/**
@@ -37,12 +37,13 @@ public class TaskHeapArrayList {
 		if (tasks.size() == 0 || tasks.size() == 1) // return null if no element is in stack // == 1 to return null if only dummy element is there
 			return null;
 
-		Task t = tasks.get(1);						// save first element in variable before it is removed
-		exchange(1, tasks.size()-1); 				// exchange element which should be removed with last element and then remove it
-		tasks.remove(tasks.size()-1);			// remove element from heap (first and last where exchanged then "new" last is removed)
-		sink(1);								// check / restore heap property with sink for new "top" element
+		Task t = tasks.get(1);				// save first element in variable before it is removed
+		//System.out.println("remove: " + tasks.get(1));
+		exchange(1, tasks.size()-1); 		// exchange element which should be removed with last element and then remove it
+		tasks.remove(tasks.size()-1);	// remove element from heap (first and last where exchanged then "new" last is removed)
+		sink(1);						// check / restore heap property
 
-		return t;									// return element which was removed from heap
+		return t;							// return element which was removed from heap
 	}
 
 	private void swim(int pos) {
@@ -51,14 +52,19 @@ public class TaskHeapArrayList {
 			return;
 
 		exchange(parent(pos), pos);			// position change with parent element
+		//System.out.println("\t\t\tRecursive Call - SWIM");
 		swim(parent(pos));					// recursive function call
+
 	}
 
 	private void sink(int pos) {
 
+		//System.out.println("SINK");
+
 		if (exists(left(pos)) && exists(right(pos))) {
 			if (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {	// check if parent is greater than any child
 				exchange(pos, minChild(pos));									// exchange parent with smallest child
+				//System.out.println("\t\t\tRecursive Call - SINK");
 				sink(minChild(pos));											// recursive function call
 			}
 		} else if (exists(left(pos))){					// check if child exists // hasChildren() function another option (=harder to read for me)
@@ -66,6 +72,10 @@ public class TaskHeapArrayList {
 				exchange(pos, left(pos));				// exchange parent with child if it is greater
 														// recursive function call not needed
 		}
+		// else if (exists(right(pos))){		// Should not be needed if both child's do not exist only left exists
+		// 	if (prio(pos) > prio(right(pos)))
+		// 		exchange(pos, right(pos));
+		// }
 
 	}
 

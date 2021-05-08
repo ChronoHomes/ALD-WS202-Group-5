@@ -28,7 +28,7 @@ public class HeapArrayListTest {
 		assertEquals(3, th.remove().getId());
 		assertNull(th.remove());
 	}
-	
+
 	@Test
 	public void removeTest2() {
 		TaskHeapArrayList th = new TaskHeapArrayList();

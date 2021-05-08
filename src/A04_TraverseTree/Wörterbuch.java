@@ -1,5 +1,7 @@
 package A04_TraverseTree;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -9,7 +11,10 @@ public class Wörterbuch {
 	 * Wurzel des Baums (Startknoten)
 	 */
 	private Wort root;
-	
+
+
+	private ArrayList<Wort> list = new ArrayList<>();
+
 	public Wort getRoot() {
 		return root;
 	}
@@ -30,8 +35,32 @@ public class Wörterbuch {
 	 * @return Menge aller zutreffenden Wörter
 	 */
 	public Set<String> getWordsWithPrefix(String prefix) {
-		
+
+		Set<String> prefixset = new HashSet<>();
+
+		System.out.println(root.toString());
+		createList(root);
+
+
+
 		return null;
+	}
+
+	// create list for further processing :)
+	public ArrayList<Wort> createList(Wort wort){
+
+		// list not created in method
+		if (wort == null)
+			return null;
+
+		list.add(wort);
+		System.out.println(wort);
+		createList(wort.getLeft());
+		createList(wort.getRight());
+
+		System.out.println("size: " + list.size());
+		return list;
+
 	}
 	
 

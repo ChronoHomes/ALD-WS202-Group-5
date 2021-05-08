@@ -21,8 +21,7 @@ public class Stack<T>
         if (size == 0)    // guard clause - to throw StackEmptyException
             throw new StackEmptyException("There is nothing left for you :(");
 
-        T data = null;              // create generic variable for data
-        data = first.getData();     // store data in variable from top of the stack
+        T data = first.getData();   // store dat in generic variable
         first = first.getNext();    // update pointer to -> "next in line"
         size--;                     // reduce size of stack
 
@@ -34,11 +33,9 @@ public class Stack<T>
      * @param element data
      */
     public void push(T element) {
-        Node<T> node = new Node<>(element); // create new element for stack
         Node<T> tmp = first;                // store current top of stack as temporary node
-        first = node;                       // assign new node as first -> update it
+        first = new Node<>(element);        // create new element for top of stack
         first.setNext(tmp);                 // set reference to previous top -> next to pop
-        tmp = null;
         size++;                             // increase stack size
     }
 
