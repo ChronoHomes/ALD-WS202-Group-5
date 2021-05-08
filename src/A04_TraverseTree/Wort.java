@@ -54,4 +54,11 @@ public class Wort {
 	public String getWort() {
 		return wort;
 	}
+
+	@Override
+	public String toString() {
+		return "Wort{" +
+				"wort='" + wort + '\'' +
+				'}';
+	}
 }
