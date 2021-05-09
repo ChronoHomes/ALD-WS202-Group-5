@@ -24,7 +24,8 @@ public class TaskHeapArrayList {
 	 */
 	public void insert(Task t) {
 		tasks.add(t);					// add new element to ArrayList
-		swim(tasks.size()-1);		// "swim up" new added element // new elements are initially always added at the last position
+		swim(tasks.size()-1);		// "swim up" new added element
+										// new elements are initially always added at the last position and then checked where they actually "belong"
 	}
 
 	/**
@@ -33,15 +34,15 @@ public class TaskHeapArrayList {
 	 */
 	public Task remove() {
 
-		if (tasks.size() == 0 || tasks.size() == 1) // return null if no element is in stack // == 1 to return null if only dummy element is there
+		if (tasks.size() == 0 || tasks.size() == 1) // return null if no element is in stack // "== 1" to return null if only dummy element is there
 			return null;
 
-		Task t = tasks.get(1);						// save first element in variable before it is removed
-		exchange(1, tasks.size()-1); 				// exchange element which should be removed with last element and then remove it
-		tasks.remove(tasks.size()-1);			// remove element from heap (first and last where exchanged then "new" last is removed)
-		sink(1);								// check / restore heap property with sink for new "top" element
+		Task tmp = tasks.get(1);					// save first element in temp variable before it is removed
+		exchange(1, tasks.size()-1); 				// exchange element which should be removed (=top), with last element
+		tasks.remove(tasks.size()-1);			// remove last element from heap (first and last where exchanged then "new" last is removed)
+		sink(1);								// check / restore heap property with sink for new "top" element (= previous last element)
 
-		return t;									// return element which was removed from heap
+		return tmp;									// return element top element from heap (which was removed)
 	}
 
 	private void swim(int pos) {
@@ -55,12 +56,12 @@ public class TaskHeapArrayList {
 
 	private void sink(int pos) {
 
-		if (exists(left(pos)) && exists(right(pos))) {							// check if both childs exist
+		if (exists(left(pos)) && exists(right(pos))) {							// check if both child's exist
 			if (prio(pos) > prio(left(pos)) || prio(pos) > prio(right(pos))) {	// check if parent is greater than any child
 				exchange(pos, minChild(pos));									// exchange parent with smallest child
 				sink(minChild(pos));											// recursive function call
 			}
-		} else if (exists(left(pos))){					// check if child exists // hasChildren() function another option (=harder to read for me)
+		} else if (exists(left(pos))){					// check if child exists (due heap property only left) // hasChildren() function another option (=harder to read for me)
 			if (prio(pos) > prio(left(pos)))			// check if parent is greater than child
 				exchange(pos, left(pos));				// exchange parent with child if it is greater
 														// recursive function call not needed since "end of tree" -> due single child -> heap property
