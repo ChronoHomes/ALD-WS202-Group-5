@@ -9,7 +9,6 @@ public class DoubleLinkedList<T>
 
     //TODO - check if possible to empty complete list -> check if return values are okay
 
-
     public DoubleLinkedList() {     // constructor -> called when new dll is created
         first = null;               // initialise first element as null
         last = null;                // initialise last element as null
@@ -25,18 +24,18 @@ public class DoubleLinkedList<T>
 
         Node<T> node = new Node<>(element);     // create new node element
 
-        if (first == null){             // check if new element is first element
+        if (first == null){             // check if new element is first element in list // Initialize first element
             first = node;               // assign new node as first
             last = node;                // assign new node as last
-            node.setNext(null);         // set next from last element to null
-            node.setPrevious(null);     // set previous from first element to null
+     //       node.setNext(null);         // set next from last element to null
+     //       node.setPrevious(null);     // set previous from first element to null
 
         } else {
             Node<T> currentLastNode = last;     // assign current last node to variable
             currentLastNode.setNext(node);      // set new node as next node for the previous first
             node.setPrevious(currentLastNode);  // set current first node as previous
             last = node;                        // set new node as last
-            node.setNext(null);                 // set next from last to null
+    //        node.setNext(null);                 // set next from last to null
         }
         nodeCount++;                            // increase node counter
     }
@@ -76,7 +75,7 @@ public class DoubleLinkedList<T>
      * Falls current nicht gesetzt, wird null retourniert.
      * @return <T>|null
      */
-    public T next() {   //TODO - what if "next element" is null -> if next() is called when current is at the last element?
+    public T next() {
 
         if (current == null)            // return null if current (list-pointer) is not set
             return null;
@@ -90,7 +89,7 @@ public class DoubleLinkedList<T>
      * analog zur Funktion next()
      * @return <T>|null
      */
-    public T previous() {   //TODO - same as for next just with first element
+    public T previous() {
 
         if (current == null)                // return null if current (list-pointer) is not set
             return null;
@@ -104,23 +103,21 @@ public class DoubleLinkedList<T>
      * Current-Pointer auf nächste <T> setzen (aber nicht auslesen).
      * Ignoriert still, dass current nicht gesetzt ist.
      */
-    //TODO - check - added CurrentNotSetException to signature - correct?
-    public void moveNext() throws CurrentNotSetException {
 
-        if (current == null) throw new CurrentNotSetException();    // throw exception if list-pointer is not set
+    public void moveNext() {
 
-        current = current.getNext();                                // move current (list-pointer) to next element in list
+        if (current == null)
+            current = current.getNext();                            // move current (list-pointer) to next element in list
     }
     
     /**
      * Analog zur Funktion moveNext()
      */
-    //TODO - check - added CurrentNotSetException to signature - correct?
-    public void movePrevious() throws CurrentNotSetException {
 
-        if (current == null) throw new CurrentNotSetException();    // throw exception if list-pointer is not set
+    public void movePrevious() {
 
-        current = current.getPrevious();                            // move current (list-pointer) to previous element in list
+        if (current != null)
+            current = current.getPrevious();                        // move current (list-pointer) to previous element in list
     }
    
     /**
@@ -145,7 +142,7 @@ public class DoubleLinkedList<T>
 
         Node<T> currentNode = first;                                // assign first node as current for element iteration through loop
 
-        for (int i = 1; i < size() && currentNode != null; i++) {   // for loop while i smaller than size() (=nodeCount) and iteration node not null (safety..)
+        for (int i = 1; i < size() && currentNode != null; i++) {   // for loop while i smaller than size() (=nodeCount) and iteration node not null
             if (i == pos){                                          // check if current element (=currentNode) is same as desired position
                 return currentNode.getData();                       // in case if statement is true return data and exit function
             }
