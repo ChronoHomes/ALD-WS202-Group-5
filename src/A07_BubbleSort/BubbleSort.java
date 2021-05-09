@@ -10,17 +10,12 @@ public class BubbleSort implements PersonenSort {
 
 		Person tmpPerson;
 		boolean changed = true;
-
-		// TODO - refactor nameing
-		// TODO - add some sort of counter to reduce checks -> since in first loop most "right" element is already in place -> not need to check again
-		// TODO - add temp variable names so it is easier to read?
-
-		int counter = 1; // start with 1 for inital array offset and then reuse it as performance counter
+		int performanceCounter = 1; // start with 1 for initial array offset (personen.length - 1) and further use as perfomance counter
 
 		while (changed){
 			changed = false;
 
-			for (int i = 0; i < (personen.length - counter); i++) {
+			for (int i = 0; i < (personen.length - performanceCounter); i++) {
 				if (personen[i].compareTo(personen[i+1]) > 0){
 					tmpPerson = personen[i];
 					personen[i] = personen[i+1];
@@ -28,9 +23,10 @@ public class BubbleSort implements PersonenSort {
 					changed = true;
 				}
 			}
-			counter++; 	// performance -> to reduce iterations in loop
-						// first iteration -> most "right" is in correct place, next iteration n-1 is in place
-						// 2nd iteration -> n-2 is in place
+			performanceCounter++; 	// performance -> to reduce iterations in loop
+									// first iteration -> most "right" is in correct place, next iteration n-1 is in place
+									// 2nd iteration -> n-2 is in place -> so no need to check position of those elements
+									// which each iteration one more element is already in the "final spot" from "right" to "left"
 		}
 
 
