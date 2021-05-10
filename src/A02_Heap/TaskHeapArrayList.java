@@ -22,6 +22,7 @@ public class TaskHeapArrayList {
 	 * Neuen Task in den Heap einfügen
 	 * @param t Einzufügender Task
 	 */
+	/** Big O notation -> O(log(n)) */
 	public void insert(Task t) {
 		tasks.add(t);					// add new element to ArrayList
 		swim(tasks.size()-1);		// "swim up" new added element
@@ -32,6 +33,7 @@ public class TaskHeapArrayList {
 	 * Das oberste Element (mit kleinster Priorität entfernen)
 	 * @return Task mit kleinster Priorität
 	 */
+	/** Big O notation -> O(log(n)) */
 	public Task remove() {
 
 		if (tasks.size() == 0 || tasks.size() == 1) // return null if no element is in stack // "== 1" to return null if only dummy element is there

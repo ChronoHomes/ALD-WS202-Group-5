@@ -21,6 +21,7 @@ public class WörterbuchV2 {
 	 * @param w Wort
 	 * @return Zahl der Wörter (=Anzahl der Elemente)
 	 */
+	/** Big O notation -> O(log(n)) */
 	public int countWordsInSubTree(Wort w) {
 
 		if (w == null)  // terminate recursion
@@ -34,10 +35,12 @@ public class WörterbuchV2 {
 	 * @param prefix Wörter müssen diesen Präfix haben
 	 * @return Menge aller zutreffenden Wörter
 	 */
+	/** Big O notation -> O(log(n)) */
 	public Set<String> getWordsWithPrefix(String prefix) {
 		return getWordsWithPrefix(prefix, root);
 	}
 
+	/** Big O notation -> O(log(n)) */
 	public Set<String> getWordsWithPrefix(String prefix, Wort wort) { // overloading method with additional parameter -> otherwise recursive call not possible
 		Set<String> set = new HashSet<>();
 

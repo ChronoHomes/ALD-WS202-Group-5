@@ -6,6 +6,7 @@ public class BubbleSort implements PersonenSort {
 	/**
 	 * Sortier-Funktion
 	 */
+	/** Big O notation -> O(n²) */ // really n² due "performance counter"?
 	public void sort(Person[] personen) {
 
 		// TODO - comments & refactor on naming

@@ -20,6 +20,7 @@ public class DoubleLinkedList<T>
      * Einfügen einer neuen <T>
      * @param element <T>
      */
+    /** Big O notation -> O(1) */
     public void add(T element) {
 
         Node<T> node = new Node<>(element);     // create new node element
@@ -43,6 +44,7 @@ public class DoubleLinkedList<T>
     /**
      * Internen Zeiger für next() zurücksetzen
      */
+    /** Big O notation -> O(1) */
     public void reset() {
         current = first;    // reset current (list-pointer) to first element in list
     }
@@ -50,6 +52,7 @@ public class DoubleLinkedList<T>
     /**
      * analog zur Funktion reset()
      */
+    /** Big O notation -> O(1) */
     public void resetToLast() {
         current = last;     // reset current (list-pointer) to last element in list
     }
@@ -58,6 +61,7 @@ public class DoubleLinkedList<T>
      * Liefert erste Node der Liste retour oder null, wenn Liste leer
      * @return Node|null
      */
+    /** Big O notation -> O(1) */
     public Node<T> getFirst() {
     	return first;   // return first element list, if list is empty return null (ensured due constructor)
     }
@@ -66,6 +70,7 @@ public class DoubleLinkedList<T>
      * Liefert letzte Node der Liste retour oder null, wenn Liste leer
      * @return Node|null
      */
+    /** Big O notation -> O(1) */
     public Node<T> getLast() {
     	return last;    // return last element list, if list is empty return null (ensured due constructor)
     }
@@ -75,6 +80,7 @@ public class DoubleLinkedList<T>
      * Falls current nicht gesetzt, wird null retourniert.
      * @return <T>|null
      */
+    /** Big O notation -> O(1) */
     public T next() {
 
         if (current == null)            // return null if current (list-pointer) is not set
@@ -89,6 +95,7 @@ public class DoubleLinkedList<T>
      * analog zur Funktion next()
      * @return <T>|null
      */
+    /** Big O notation -> O(1) */
     public T previous() {
 
         if (current == null)                // return null if current (list-pointer) is not set
@@ -103,7 +110,7 @@ public class DoubleLinkedList<T>
      * Current-Pointer auf nächste <T> setzen (aber nicht auslesen).
      * Ignoriert still, dass current nicht gesetzt ist.
      */
-
+    /** Big O notation -> O(1) */
     public void moveNext() {
 
         if (current != null)
@@ -113,7 +120,7 @@ public class DoubleLinkedList<T>
     /**
      * Analog zur Funktion moveNext()
      */
-
+    /** Big O notation -> O(1) */
     public void movePrevious() {
 
         if (current != null)
@@ -125,6 +132,7 @@ public class DoubleLinkedList<T>
      * @return <T>
      * @throws CurrentNotSetException
      */
+    /** Big O notation -> O(1) */
     public T getCurrent() throws CurrentNotSetException {
 
         if (current == null) throw new CurrentNotSetException();    // throw exception if list-pointer is not set
@@ -137,6 +145,7 @@ public class DoubleLinkedList<T>
      * @param pos Position, Nummerierung startet mit 1
      * @return <T>|null
      */
+    /** Big O notation -> O(n) */
     public T get(int pos) {     //TODO - write Unit Test to proof get() is working
         if (first == null) throw new IllegalStateException();       // throw Exception if list is empty -> to be confirmed if this should work like this
 
@@ -157,6 +166,7 @@ public class DoubleLinkedList<T>
      * Falls das entfernte Element das aktuelle Element ist, wird current auf null gesetzt.
      * @param pos
      */
+    /** Big O notation -> O(n) */
     public void remove(int pos) {
 
         Node<T> currentNode = first;    // start with first node in loop
@@ -195,6 +205,7 @@ public class DoubleLinkedList<T>
      * (falls kein Nachfolger) das vorhergehende Element 
      * @throws CurrentNotSetException
      */
+    /** Big O notation -> O(1) */
     public void removeCurrent() throws CurrentNotSetException {
 
         if (current == null) throw new CurrentNotSetException();
@@ -228,6 +239,7 @@ public class DoubleLinkedList<T>
      * und setzt dann die neu eingefügte <T> als aktuelle (current) <T>.
      * @throws CurrentNotSetException 
      */
+    /** Big O notation -> O(1) */
     public void insertAfterCurrentAndMove(T element) throws CurrentNotSetException { //TODO - refactor
 
         if (current == null)
@@ -250,6 +262,7 @@ public class DoubleLinkedList<T>
         nodeCount++;
     }
 
+    /** Big O notation -> O(1) */
     public int size(){
         return nodeCount;
     }
