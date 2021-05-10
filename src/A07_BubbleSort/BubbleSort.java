@@ -8,9 +8,10 @@ public class BubbleSort implements PersonenSort {
 	 */
 	public void sort(Person[] personen) {
 
+		// TODO - comments & refactor on naming
 		Person tmpPerson;
 		boolean changed = true;
-		int performanceCounter = 1; // start with 1 for initial array offset (personen.length - 1) and further use as perfomance counter
+		int performanceCounter = 1; // start with 1 for initial array offset (personen.length - 1) and further use as performance counter
 
 		while (changed){
 			changed = false;
