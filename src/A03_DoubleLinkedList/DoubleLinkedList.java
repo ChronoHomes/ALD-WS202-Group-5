@@ -106,7 +106,7 @@ public class DoubleLinkedList<T>
 
     public void moveNext() {
 
-        if (current == null)
+        if (current != null)
             current = current.getNext();                            // move current (list-pointer) to next element in list
     }
     
@@ -161,7 +161,7 @@ public class DoubleLinkedList<T>
 
         Node<T> currentNode = first;    // start with first node in loop
 
-        for (int i = 1; i <= size() && currentNode != null; i++) { // another option would be -> while(currentNode != null) or only the size() in the for loop
+        for (int i = 1; i <= size(); i++) { // another option would be -> while(currentNode != null) or only the size() in the for loop
 
             if (i == pos){      // check if position has been found
 
