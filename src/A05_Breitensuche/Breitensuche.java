@@ -1,6 +1,6 @@
 package A05_Breitensuche;
 
-import java.util.List;
+import java.util.*;
 
 public class Breitensuche extends BaseTree<Integer> {
 
@@ -16,7 +16,26 @@ public class Breitensuche extends BaseTree<Integer> {
 	 */
 	public List<Integer> getBreadthFirstOrder(Node<Integer> start) {
 
-		return null;
+		LinkedList<Node<Integer>> next = new LinkedList<>();
+		List<Integer> visited = new ArrayList<>();
+
+		next.add(start);
+
+		while (!next.isEmpty()){
+									// TODO: define node outside while? and move "remove" to bottom (= before while is checked)
+			Node<Integer> node = next.remove(); // returns first element and removes it
+			visited.add(node.getValue());	// add element to linkedlist
+
+			if (node.getLeft() != null){
+				next.add(node.getLeft());
+			}
+			if (node.getRight() != null){
+				next.add(node.getRight());
+			}
+		}
+
+		return visited;
+
 	}
 
 	/**

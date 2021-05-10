@@ -1,5 +1,6 @@
 package A06_Tiefensuche;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import A05_Breitensuche.BaseTree;
@@ -13,7 +14,7 @@ public class Tiefensuche extends BaseTree<Film> {
 	 */
 	protected int compare(Film a, Film b) {
 
-		return 0;
+		return Double.compare(a.getLänge(), b.getLänge());
 	}
 
 	/**
@@ -23,7 +24,16 @@ public class Tiefensuche extends BaseTree<Film> {
 	 */
 	public List<String> getNodesInOrder(Node<Film> node) {
 
-		return null;
+		List<String> list = new ArrayList<>();
+
+		if (node == null)
+			return list;
+
+		list.addAll(getNodesInOrder(node.getLeft()));
+		list.add(node.getValue().getTitel()); // in the middle due the symmetry for in-order
+		list.addAll(getNodesInOrder(node.getRight()));
+
+		return list;
 	}
 	
 	/**
