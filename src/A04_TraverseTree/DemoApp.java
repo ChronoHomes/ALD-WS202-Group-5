@@ -1,5 +1,7 @@
 package A04_TraverseTree;
 
+import java.util.ArrayList;
+
 public class DemoApp {
 
     public static void main(String[] args) {
@@ -20,7 +22,11 @@ public class DemoApp {
         wb.add("Marty");
 
 
-        wb.createList(wb.getRoot());
+        ArrayList<Wort> list = wb.createList(wb.getRoot());
+        for (Wort wort : list) {
+
+        }
+
 
     }
 }
