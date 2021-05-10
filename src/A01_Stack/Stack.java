@@ -16,6 +16,7 @@ public class Stack<T>
      * Existiert kein Element, wird eine Exception ausgelöst.
      * @throws StackEmptyException
      */
+    /** Big O notation -> O(1) */
     public T pop() throws StackEmptyException {
 
         if (size == 0)    // guard clause - to throw StackEmptyException
@@ -32,6 +33,7 @@ public class Stack<T>
      * Übergebenen T auf Stack (als oberstes Element) speichern.
      * @param element data
      */
+    /** Big O notation -> O(1) */
     public void push(T element) {
         Node<T> tmp = first;                // store current top of stack as temporary node
         first = new Node<>(element);        // create new element for top of stack
@@ -43,6 +45,7 @@ public class Stack<T>
      * Liefert die Anzahl der Elemente im Stack
      * @return
      */
+    /** Big O notation -> O(1) */
     public int getCount() {
         return size;
     }
