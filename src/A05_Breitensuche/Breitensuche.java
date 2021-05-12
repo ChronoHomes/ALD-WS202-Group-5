@@ -17,7 +17,6 @@ public class Breitensuche extends BaseTree<Integer> {
 	public List<Integer> getBreadthFirstOrder(Node<Integer> start) {
 
 
-
 		return null;
 	}
 
