@@ -16,8 +16,26 @@ public class Breitensuche extends BaseTree<Integer> {
 	 */
 	public List<Integer> getBreadthFirstOrder(Node<Integer> start) {
 
+		List<Integer> visited = new ArrayList<>();				// visited list for result
+		LinkedList<Node<Integer>> queue = new LinkedList<>();	// queue for chaching childs
 
-		return null;
+		queue.add(start); 										// add start node
+
+		while (!queue.isEmpty()){								// repeat until the queue is empty
+			Node<Integer> tmpnode = queue.poll();				// cache the node
+			visited.add(tmpnode.getValue());					// add the cached node to the visted list
+
+			if (tmpnode.getLeft()!=null){						// check left child is existing
+				queue.add(tmpnode.getLeft());					// add child to visited list
+			}
+			if (tmpnode.getRight()!=null){						// check right child is existing
+				queue.add(tmpnode.getRight());					// add child to visited list
+			}
+
+		}
+
+
+		return visited;
 	}
 
 	/**
@@ -28,6 +46,11 @@ public class Breitensuche extends BaseTree<Integer> {
 	 * @return Liste aller Knoten
 	 */
 	public List<Integer> getBreadthFirstOrderForLevel(Node<Integer> start, int level) {
+
+
+
+
+
 
 		return null;
 	}
