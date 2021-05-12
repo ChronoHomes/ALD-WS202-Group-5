@@ -24,6 +24,12 @@ public class Node<Type> {
 
 
 	/**
+	 * Level des Nodes basierend auf Root
+	 */
+	private int level;
+
+
+	/**
 	 * Konstruktor
 	 * @param value Zu speichernder Wert
 	 */
@@ -58,5 +64,14 @@ public class Node<Type> {
 	public Type getValue() {
 		return value;
 	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	
 }
