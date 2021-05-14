@@ -12,8 +12,6 @@ public class Wörterbuch {
 	 */
 	private Wort root;
 
-	private ArrayList<Wort> list = new ArrayList<>(); // Helper for createList() - is required because of the recursion
-
 	public Wort getRoot() {
 		return root;
 	}
@@ -23,14 +21,13 @@ public class Wörterbuch {
 	 * @param w Wort
 	 * @return Zahl der Wörter (=Anzahl der Elemente)
 	 */
+	/** Big O notation -> O(log(n)) */
 	public int countWordsInSubTree(Wort w) {
 
-		ArrayList<Wort> words = createList(w); // returns an Arraylist
-
-		if (words == null)  // In case of a NullPointerException
+		if (w == null)  // terminate recursion
 			return 0;
 
-		return words.size(); // return the number of elements
+		return countWordsInSubTree(w.getLeft()) + countWordsInSubTree(w.getRight()) + 1;
 	}
 
 	/**
@@ -38,41 +35,27 @@ public class Wörterbuch {
 	 * @param prefix Wörter müssen diesen Präfix haben
 	 * @return Menge aller zutreffenden Wörter
 	 */
+	/** Big O notation -> O(log(n)) */
 	public Set<String> getWordsWithPrefix(String prefix) {
+		return getWordsWithPrefix(prefix, root);
+	}
 
-		Set<String> set = new HashSet<>(); // Creating return attribute
+	/** Big O notation -> O(log(n)) */
+	public Set<String> getWordsWithPrefix(String prefix, Wort wort) { // overloading method with additional parameter -> otherwise recursive call not possible
+		Set<String> set = new HashSet<>();
 
-		ArrayList<Wort> words = createList(root); // returns an Arraylist
+		if (wort == null)	// check if word "exists" if not return set and stop any further recursive calls
+			return set;
 
-		for (Wort word : words) {
-			if (word.getWort().startsWith(prefix)){
-				set.add(word.getWort());    // words with prefix will be added to the list
+		if (wort.getWort().startsWith(prefix))	// check if word has prefix
+			set.add(wort.getWort());			// if it has add it to the list
 
-				// For Testing:
-				// System.out.println("getWordsWithPrefix TEST - " + word.getWort());
-			}
-		}
+																	// build set through recursive call
+		set.addAll(getWordsWithPrefix(prefix, wort.getLeft()));		// addAll so the return value of type set can be added // recursive call based on left child
+		set.addAll(getWordsWithPrefix(prefix, wort.getRight()));	// addAll so the return value of type set can be added // recursive call based on right child
 
 		return set;
 	}
-
-	// create list for further processing :)
-	public ArrayList<Wort> createList(Wort wort){
-
-		// list not created in method
-		if (wort == null)
-			return null;
-
-		list.add(wort);
-		// System.out.println("createList TEST - " + wort);
-		createList(wort.getLeft());
-		createList(wort.getRight());
-
-		// System.out.println("size: " + list.size());
-		return list;
-
-	}
-	
 
 	/**
 	 * Neues Wort hinzufügen
