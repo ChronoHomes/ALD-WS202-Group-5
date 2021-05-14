@@ -22,6 +22,7 @@ public class Tiefensuche extends BaseTree<Film> {
 	 * @param node Wurzelknoten des Teilbaums
 	 * @return Liste der Titel in symmetrischer Reihenfolge
 	 */
+	/** Big O notation -> O() */ //TODO - ADD O notation
 	public List<String> getNodesInOrder(Node<Film> node) {
 
 		List<String> list = new ArrayList<>();
@@ -42,9 +43,29 @@ public class Tiefensuche extends BaseTree<Film> {
 	 * @param max Maximale Länge des Spielfilms
 	 * @return Liste der Filmtitel in Hauptreihenfolge
 	 */
+	/** Big O notation -> O() */ //TODO - ADD O notation
 	public List<String> getMinMaxPreOrder(double min, double max) {
-
-		return null;
+		//printTree();
+		return getMinMaxPreOrder(min, max, root);
 	}
+
+	//Method Overloading for Recursive call
+	public List<String> getMinMaxPreOrder(double min, double max, Node<Film> node) {
+
+		List<String> list = new ArrayList<>();
+
+		if (node == null)
+			return list;
+
+		if (node.getValue().getLänge() > min && node.getValue().getLänge() < max)
+			list.add(node.getValue().getTitel());
+
+		list.addAll(getMinMaxPreOrder(min, max, node.getLeft()));
+		list.addAll(getMinMaxPreOrder(min, max, node.getRight()));
+
+		return list;
+	}
+
+
 
 }
