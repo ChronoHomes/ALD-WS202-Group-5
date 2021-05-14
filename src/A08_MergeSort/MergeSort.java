@@ -11,6 +11,7 @@ public class MergeSort implements PersonenSort {
 	public void sort(Person[] personen) {
 		// Start des rekursiven Aufrufs
 		sort(personen, 0, personen.length-1);
+
 	}
 
 	/**
@@ -23,14 +24,20 @@ public class MergeSort implements PersonenSort {
 	{
 		// TODO: Aufteilung & Rekursion implementieren
 		
-		int mitte = 0;
+		int mitte = ((end - start) / 2) + start; // + start as offset compensation
+
+		if (start >= end) //other method? -> end - start == 1
+			return;
+
+		sort(personen, start, mitte);
+		sort(personen, mitte+1, end);
 		
 		// Für Merge: Hälften in eigene Arrays kopieren
 		// Hinweis: bei copyOfRange ist Obergrenze exklusiv, deshalb "+ 1"
-		Person[] teil1 = Arrays.copyOfRange(personen, start, mitte+1);
-		Person[] teil2 = Arrays.copyOfRange(personen, mitte+1, end+1);
+		Person[] part1 = Arrays.copyOfRange(personen, start, mitte+1);
+		Person[] part2 = Arrays.copyOfRange(personen, mitte+1, end+1);
 		// Beide Hälften zusammenfügen und in data-Array schreiben
-		merge(teil1, teil2, personen, start);
+		merge(part1, part2, personen, start);
 	}
 
 	/**
@@ -43,6 +50,9 @@ public class MergeSort implements PersonenSort {
 	public void merge(Person[] pers1, Person[] pers2, Person[] result, int start) {
 
 		// TODO: Merge implementieren
+
+
+
 		
 	}
 
