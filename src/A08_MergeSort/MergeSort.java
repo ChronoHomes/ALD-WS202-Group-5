@@ -51,7 +51,17 @@ public class MergeSort implements PersonenSort {
 
 		// TODO: Merge implementieren
 
+		int i = 0;
 
+		if (pers1[i].compareTo(pers2[i]) > 0 ){
+
+		}
+
+		// 2 arrays position für position vergleichen
+		// -> kleinere Element kommt in Ziel Array
+		// pointer von diesem Array wird weitergesetzt
+		// solange bis eines von beiden Arrays leer ist
+		// dann restliches Array einfach reinkopieren (=funktion oder element für element?)
 
 		
 	}
