@@ -26,7 +26,7 @@ public class MergeSort implements PersonenSort {
 		
 		int mitte = ((end - start) / 2) + start; // + start as offset compensation
 
-		if (start >= end) //other method? -> end - start == 1
+		if (start >= end) //other method? -> end - start == 1 // if 0 items or 1 item is left for split
 			return;
 
 		sort(personen, start, mitte);
