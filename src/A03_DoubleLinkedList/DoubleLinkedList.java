@@ -191,6 +191,8 @@ public class DoubleLinkedList<T>
             currentNode = currentNode.getNext();
         }
 
+
+
     }
     
     /**
@@ -200,24 +202,17 @@ public class DoubleLinkedList<T>
      * @throws CurrentNotSetException
      */
     /** Big O notation -> O(1) */
-    public void removeCurrent() throws CurrentNotSetException {
+    public void removeCurrent() throws CurrentNotSetException {     // TODO - merge remove() & removeCurrent() to since both are almost the same
 
         if (current == null) throw new CurrentNotSetException();
 
-        // --------------------------------------------------------------------
-        // same as remove just with a bit added current pointer handling
-        // TODO - check if possible to "merge" removeCurrent() and remove since both are almost the same...
-        // -------------------------------
-
-        // TODO - check if still works if last and only element is deleted
-
         if (current.getPrevious() != null)  // do not try to set next on a null
-            current.getPrevious().setNext(current.getNext()); // set from previous element the new next "unlink" the element which should be removed
+            current.getPrevious().setNext(current.getNext()); // set from the previous element the new next which is the next element of the one which should be removed
         else // first found -> if (currentNode.equals(first)){}
             first = current.getNext(); // current should be removed therefore "next of current" is new first if current equals first
 
         if (current.getNext() != null) {     // do not try to set previous on a null
-            current.getNext().setPrevious(current.getPrevious());  // set from next element the new previous "unlink" the element which should be removed
+            current.getNext().setPrevious(current.getPrevious());  // set from the next element the new previous which is the previous element of the one which should be removed
             current = current.getNext(); //current pointer handling
         } else { // last found -> if (currentNode.equals(last)){}
             last = current.getPrevious();
@@ -234,7 +229,7 @@ public class DoubleLinkedList<T>
      * @throws CurrentNotSetException 
      */
     /** Big O notation -> O(1) */
-    public void insertAfterCurrentAndMove(T element) throws CurrentNotSetException { //TODO - refactor
+    public void insertAfterCurrentAndMove(T element) throws CurrentNotSetException {
 
         if (current == null)
             throw new CurrentNotSetException();
@@ -245,7 +240,7 @@ public class DoubleLinkedList<T>
 
         tmpCurrent.setNext(insertNode);
 
-        if (tmpNext != null) // not possible to assign if "next" is null
+        if (tmpNext != null)
             tmpNext.setPrevious(insertNode);
 
         insertNode.setPrevious(tmpCurrent);
