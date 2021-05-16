@@ -9,26 +9,24 @@ public class BubbleSort implements PersonenSort {
 	/** Big O notation -> O(n²) */
 	public void sort(Person[] personen) {
 
-		// TODO - comments & refactor on naming
-		Person tmpPerson;
-		boolean changed = true;
-		int performanceCounter = 1; // start with 1 for initial array offset (personen.length - 1) and further use as performance counter
+		Person tmpPerson;			// temporary helper for sorting process
+		boolean changed = true;		// termination variable for while loop
+		int perfCount = 1; 			// counter to reduce loop iterations // start with 1 for initial offset due .length
 
 		while (changed){
-			changed = false;
+			changed = false;		// set termination condition always to false, to terminate in case we do not enter IF
 
-			for (int i = 0; i < (personen.length - performanceCounter); i++) {
-				if (personen[i].compareTo(personen[i+1]) > 0){
-					tmpPerson = personen[i];
-					personen[i] = personen[i+1];
-					personen[i+1] = tmpPerson;
-					changed = true;
+			for (int i = 0; i < (personen.length - perfCount); i++) {	//
+				if (personen[i].compareTo(personen[i+1]) > 0){			// compare two elements which are next to each other and check if they must be exchanged
+					tmpPerson = personen[i];							// store element in helper variable
+					personen[i] = personen[i+1];						// overwrite element with next element next to it (smaller one)
+					personen[i+1] = tmpPerson;							// write on 2nd element the content of the helper
+					changed = true;										// set changed flag to to true to ensure another iteration (=while loop)
 				}
 			}
-			performanceCounter++; 	// performance -> to reduce iterations in loop
-									// first iteration -> most "right" is in correct place, next iteration n-1 is in place
-									// 2nd iteration -> n-2 is in place -> so no need to check position of those elements
-									// which each iteration one more element is already in the "final spot" from "right" to "left"
+			perfCount++; 		// increase count of performance counter, with each iteration of the for loop the largest unsorted
+								// element is already in the right position
+								// therefore the for loop does not need to check it again
 		}
 
 
