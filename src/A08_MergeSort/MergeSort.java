@@ -1,6 +1,6 @@
 package A08_MergeSort;
 
-import java.util.Arrays;
+import java.util.*;
 
 
 public class MergeSort implements PersonenSort {
@@ -24,6 +24,14 @@ public class MergeSort implements PersonenSort {
 	{
 	//	System.out.println("start sort");
 		// TODO: Aufteilung & Rekursion implementieren
+
+		// to be deleted -> test with default sort
+		//List<Person> list = Arrays.asList(personen);
+		//Comparator<Person> nameComparator = Comparator.comparing(Person::getNachname).thenComparing(Person::getVorname);
+		//list.sort(nameComparator);
+		//return;
+
+
 		
 		int mitte = ((end - start) / 2) + start; // calculate middle
 
@@ -39,6 +47,8 @@ public class MergeSort implements PersonenSort {
 		Person[] part2 = Arrays.copyOfRange(personen, mitte+1, end+1);
 		// Beide Hälften zusammenfügen und in data-Array schreiben
 		merge(part1, part2, personen, start);
+
+
 	}
 
 	/**
