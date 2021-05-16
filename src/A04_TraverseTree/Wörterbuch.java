@@ -27,7 +27,7 @@ public class Wörterbuch {
 		if (w == null)  // terminate recursion
 			return 0;
 
-		return countWordsInSubTree(w.getLeft()) + countWordsInSubTree(w.getRight()) + 1;
+		return countWordsInSubTree(w.getLeft()) + countWordsInSubTree(w.getRight()) + 1; // recursive call on left and right leave
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class Wörterbuch {
 
 	/** Big O notation -> O(log(n)) */
 	public Set<String> getWordsWithPrefix(String prefix, Wort wort) { // overloading method with additional parameter -> otherwise recursive call not possible
-		Set<String> set = new HashSet<>();
+		Set<String> set = new HashSet<>();		//
 
 		if (wort == null)	// check if word "exists" if not return set and stop any further recursive calls
 			return set;

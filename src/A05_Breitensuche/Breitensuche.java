@@ -45,7 +45,7 @@ public class Breitensuche extends BaseTree<Integer> {
 	 * @param level Nur Knoten dieser Ebene ausgeben
 	 * @return Liste aller Knoten
 	 */
-	/** Big O notation -> O() */ //TODO - ADD O notation
+	/** Big O notation -> O() */ // TODO - ADD O notation --> O(V+E)
 	public List<Integer> getBreadthFirstOrderForLevel(Node<Integer> start, int level) {
 
 		List<Integer> levelList = new ArrayList<>();			// create list for return values

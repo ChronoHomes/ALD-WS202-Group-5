@@ -7,8 +7,6 @@ public class DoubleLinkedList<T>
     private Node<T> current;
     private int nodeCount;
 
-    //TODO - check if possible to empty complete list -> check if return values are okay
-
     public DoubleLinkedList() {     // constructor -> called when new dll is created
         first = null;               // initialise first element as null
         last = null;                // initialise last element as null
@@ -28,17 +26,13 @@ public class DoubleLinkedList<T>
         if (first == null){             // check if new element is first element in list // Initialize first element
             first = node;               // assign new node as first
             last = node;                // assign new node as last
-     //       node.setNext(null);         // set next from last element to null
-     //       node.setPrevious(null);     // set previous from first element to null
-
         } else {
-            Node<T> currentLastNode = last;     // assign current last node to variable
-            currentLastNode.setNext(node);      // set new node as next node for the previous first
-            node.setPrevious(currentLastNode);  // set current first node as previous
-            last = node;                        // set new node as last
-    //        node.setNext(null);                 // set next from last to null
+            Node<T> tmpNode = last;     // assign current last node to variable
+            tmpNode.setNext(node);      // set new node as next node for the previous first
+            node.setPrevious(tmpNode);  // set current first node as previous
+            last = node;                // set new node as last
         }
-        nodeCount++;                            // increase node counter
+        nodeCount++;                    // increase node counter
     }
 
     /**
@@ -114,7 +108,7 @@ public class DoubleLinkedList<T>
     public void moveNext() {
 
         if (current != null)
-            current = current.getNext();                            // move current (list-pointer) to next element in list
+            current = current.getNext();        // move current (list-pointer) to next element in list
     }
     
     /**
@@ -124,7 +118,7 @@ public class DoubleLinkedList<T>
     public void movePrevious() {
 
         if (current != null)
-            current = current.getPrevious();                        // move current (list-pointer) to previous element in list
+            current = current.getPrevious();    // move current (list-pointer) to previous element in list
     }
    
     /**
@@ -171,17 +165,17 @@ public class DoubleLinkedList<T>
 
         Node<T> currentNode = first;    // start with first node in loop
 
-        for (int i = 1; i <= size(); i++) { // another option would be -> while(currentNode != null) or only the size() in the for loop
+        for (int i = 1; i <= size() && currentNode != null; i++) { // loop to iterate through complete dll
 
             if (i == pos){      // check if position has been found
 
-                if (currentNode.getPrevious() != null)  // do not try to set next on a null
-                    currentNode.getPrevious().setNext(currentNode.getNext()); // set from previous element the new next "unlink" the element which should be removed
+                if (currentNode.getPrevious() != null)  // check if previous is not a null
+                    currentNode.getPrevious().setNext(currentNode.getNext()); // set from the previous element the new next which is the next element of the one which should be removed
                 else // first found -> if (currentNode.equals(first)){}
                     first = currentNode.getNext();
 
-                if (currentNode.getNext() != null)      // do not try to set previous on a null
-                    currentNode.getNext().setPrevious(currentNode.getPrevious());  // set from next element the new previous "unlink" the element which should be removed
+                if (currentNode.getNext() != null)      // check if next is not a null
+                    currentNode.getNext().setPrevious(currentNode.getPrevious());  // set from the next element the new previous which is the previous element of the one which should be removed
                 else // last found -> if (currentNode.equals(last)){}
                     last = currentNode.getPrevious();
 
@@ -191,7 +185,7 @@ public class DoubleLinkedList<T>
                 }
 
                 nodeCount--;
-                break; //stop a re-run of the loop for performance once item has been found
+                break; //stop a re-run of the loop
             }
 
             currentNode = currentNode.getNext();
