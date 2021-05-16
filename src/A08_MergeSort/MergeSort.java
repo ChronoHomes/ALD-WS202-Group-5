@@ -48,7 +48,7 @@ public class MergeSort implements PersonenSort {
 	 * @param result Ergebnisarray
 	 * @param start  Position für Speicherung in Ergebnisarray
 	 */
-	public void merge(Person[] pers1, Person[] pers2, Person[] result, int start) {
+	public void merge(Person[] pers1, Person[] pers2, Person[] result, int start) { // TODO - REFACTOR
 
 		System.out.println("start merge");
 
@@ -98,16 +98,14 @@ public class MergeSort implements PersonenSort {
 			pointerResult++;
 		}
 
+		// TODO - refactor -> just copy remaining array to result
 		if (pers1.length == pointerPers1){
-
 			while (!(pers2.length == pointerPers2)){
 				result[pointerResult] = pers2[pointerPers2];
 				pointerPers2++;
 				pointerResult++;
 			}
-
 		} else{
-
 			while (!(pers1.length == pointerPers1)){
 				result[pointerResult] = pers1[pointerPers1];
 				pointerPers1++;
