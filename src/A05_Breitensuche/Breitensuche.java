@@ -23,15 +23,15 @@ public class Breitensuche extends BaseTree<Integer> {
 		queue.add(start); 										// add start node
 
 		while (!queue.isEmpty()){								// repeat until the queue is empty
-			Node<Integer> tmpnode = queue.poll();				// cache the node
+			Node<Integer> tmpNode = queue.poll();				// cache the node
 
-			if (tmpnode.getLeft()!=null)						// check left child is existing
-				queue.add(tmpnode.getLeft());					// add child to visited list
+			if (tmpNode.getLeft()!=null)						// check left child is existing
+				queue.add(tmpNode.getLeft());					// add child to visited list
 
-			if (tmpnode.getRight()!=null)						// check right child is existing
-				queue.add(tmpnode.getRight());					// add child to visited list
+			if (tmpNode.getRight()!=null)						// check right child is existing
+				queue.add(tmpNode.getRight());					// add child to visited list
 
-			visited.add(tmpnode.getValue());					// add the cached node to the visted list
+			visited.add(tmpNode.getValue());					// add the cached node to the visted list
 
 		}
 
@@ -48,29 +48,29 @@ public class Breitensuche extends BaseTree<Integer> {
 	/** Big O notation -> O() */ //TODO - ADD O notation
 	public List<Integer> getBreadthFirstOrderForLevel(Node<Integer> start, int level) {
 
-		List<Integer> levelList = new ArrayList<>();
-		LinkedList<Node<Integer>> queue = new LinkedList<>();
+		List<Integer> levelList = new ArrayList<>();			// create list for return values
+		LinkedList<Node<Integer>> queue = new LinkedList<>();	// create queue for nodes which must be checked
 
-		start.setLevel(1);
-		queue.add(start);
+		start.setLevel(1);			// set level of start node to 1
+		queue.add(start);			// add start node to queue (=first one to be checked)
 
-		while (!queue.isEmpty()){
-			Node<Integer> tmpNode = queue.poll();
+		while (!queue.isEmpty()){						// while queue is NOT empty run through loop
+			Node<Integer> tmpNode = queue.poll();		// get element (FIFO), store in temporary variable and remove from queue
 
-			if (tmpNode.getLeft() != null)
-				queue.add(tmpNode.getLeft());
+			if (tmpNode.getLeft() != null)				// check if left child exists
+				queue.add(tmpNode.getLeft());			// if it does add to queue
 
-			if (tmpNode.getRight() != null)
-				queue.add(tmpNode.getRight());
+			if (tmpNode.getRight() != null)				// check if right child exits
+				queue.add(tmpNode.getRight());			// if it does add to queue
 
-			if (tmpNode.getParent() != null)
-				tmpNode.setLevel(tmpNode.getParent().getLevel() + 1);
+			if (tmpNode.getParent() != null)							// check if current element has a parent
+				tmpNode.setLevel(tmpNode.getParent().getLevel() + 1);	// if it has get level from parent add 1 to it and set it as it's own level
 
-			if (tmpNode.getLevel() == level)
-				levelList.add(tmpNode.getValue());
+			if (tmpNode.getLevel() == level)			// check if level of node is target level from method parameter
+				levelList.add(tmpNode.getValue());		// if it is add it to the list which is returned from the method
 		}
 
-		return levelList;
+		return levelList;	// return complete list of of level
 
 	}
 

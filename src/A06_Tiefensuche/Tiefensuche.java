@@ -22,17 +22,17 @@ public class Tiefensuche extends BaseTree<Film> {
 	 * @param node Wurzelknoten des Teilbaums
 	 * @return Liste der Titel in symmetrischer Reihenfolge
 	 */
-	/** Big O notation -> O() */ //TODO - ADD O notation
+	/** Big O notation -> O() */ // TODO - ADD O notation --> O(V+E)
 	public List<String> getNodesInOrder(Node<Film> node) {
 
-		List<String> list = new ArrayList<>();
+		List<String> list = new ArrayList<>();		// create new list to store film title
 
-		if (node == null)
+		if (node == null)		// termination of recursion
 			return list;
 
-		list.addAll(getNodesInOrder(node.getLeft()));
-		list.add(node.getValue().getTitel()); // in the middle due the symmetry for in-order
-		list.addAll(getNodesInOrder(node.getRight()));
+		list.addAll(getNodesInOrder(node.getLeft()));	// call recursive method on left child leave
+		list.add(node.getValue().getTitel()); 			// in the middle due the symmetry for in-order
+		list.addAll(getNodesInOrder(node.getRight()));	// call recursive method on right child leave
 
 		return list;
 	}
@@ -46,22 +46,22 @@ public class Tiefensuche extends BaseTree<Film> {
 	/** Big O notation -> O() */ //TODO - ADD O notation
 	public List<String> getMinMaxPreOrder(double min, double max) {
 		//printTree();
-		return getMinMaxPreOrder(min, max, root);
+		return getMinMaxPreOrder(min, max, root);	// call method recursive with min & max from method parameter and the root
 	}
 
-	//Method Overloading for Recursive call
-	public List<String> getMinMaxPreOrder(double min, double max, Node<Film> node) {
 
-		List<String> list = new ArrayList<>();
+	public List<String> getMinMaxPreOrder(double min, double max, Node<Film> node) {	// overload method to call it recursive
 
-		if (node == null)
+		List<String> list = new ArrayList<>();		// create new list to store film title
+
+		if (node == null)		// termination of recursion
 			return list;
 
-		if (node.getValue().getLänge() > min && node.getValue().getLänge() < max)
-			list.add(node.getValue().getTitel());
+		if (node.getValue().getLänge() > min && node.getValue().getLänge() < max)	// check if duration is within min & max parameter
+			list.add(node.getValue().getTitel());									// if it is add to list
 
-		list.addAll(getMinMaxPreOrder(min, max, node.getLeft()));
-		list.addAll(getMinMaxPreOrder(min, max, node.getRight()));
+		list.addAll(getMinMaxPreOrder(min, max, node.getLeft()));					// call method recursive on left leave
+		list.addAll(getMinMaxPreOrder(min, max, node.getRight()));					// call method recursive on right leave
 
 		return list;
 	}
