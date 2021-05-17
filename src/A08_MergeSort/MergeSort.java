@@ -22,30 +22,25 @@ public class MergeSort implements PersonenSort {
 	 */
 	public void sort(Person[] personen, int start, int end)
 	{
-	//	System.out.println("start sort");
-		// TODO: Aufteilung & Rekursion implementieren
-
+		/*
 		// to be deleted -> test with default sort
-		//List<Person> list = Arrays.asList(personen);
-		//Comparator<Person> nameComparator = Comparator.comparing(Person::getNachname).thenComparing(Person::getVorname);
-		//list.sort(nameComparator);
-		//return;
+		List<Person> list = Arrays.asList(personen);
+		Comparator<Person> nameComparator = Comparator.comparing(Person::getNachname).thenComparing(Person::getVorname);
+		list.sort(nameComparator);
+		return;
+		*/
 
+		int middle = ((end - start) / 2) + start; // calculate middle
 
-		
-		int mitte = ((end - start) / 2) + start; // calculate middle
-
-		if (start >= end) //other method? -> end - start == 1 // if 0 items or 1 item is left for split
+		if (start >= end)
 			return;
 
-		sort(personen, start, mitte);
-		sort(personen, mitte+1, end);
-		
-		// Für Merge: Hälften in eigene Arrays kopieren
-		// Hinweis: bei copyOfRange ist Obergrenze exklusiv, deshalb "+ 1"
-		Person[] part1 = Arrays.copyOfRange(personen, start, mitte+1);
-		Person[] part2 = Arrays.copyOfRange(personen, mitte+1, end+1);
-		// Beide Hälften zusammenfügen und in data-Array schreiben
+		sort(personen, start, middle);
+		sort(personen, middle+1, end);
+
+		Person[] part1 = Arrays.copyOfRange(personen, start, middle+1);
+		Person[] part2 = Arrays.copyOfRange(personen, middle+1, end+1);
+
 		merge(part1, part2, personen, start);
 
 
@@ -83,12 +78,7 @@ public class MergeSort implements PersonenSort {
 			System.out.println("\t\tIndex: " + i + " Name: " + result[i].getNachname() + " " + result[i].getVorname());
 		}
 
-
-		// 		while ((pers1.length - 1) < pointerPers1 || (pers2.length - 1) < pointerPers2){
 		while (!(pers1.length == pointerPers1 || pers2.length == pointerPers2)){
-
-			System.out.println("pers1.length = " + pers1.length + " pointer: " + pointerPers1);
-			System.out.println("pers2.length = " + pers2.length + " pointer: " + pointerPers2);
 
 
 			if (pers1[pointerPers1].compareTo(pers2[pointerPers2]) > 0 ){ //return <0, wenn a<b || =0, wenn a=b || >0, wenn a>b
@@ -108,21 +98,37 @@ public class MergeSort implements PersonenSort {
 			pointerResult++;
 		}
 
-		// TODO - refactor -> just copy remaining array to result
+
 		if (pers1.length == pointerPers1){
-			while (!(pers2.length == pointerPers2)){
-				result[pointerResult] = pers2[pointerPers2];
-				pointerPers2++;
-				pointerResult++;
-			}
+			System.arraycopy(pers2, pointerPers2, result, pointerResult, (pers2.length - pointerPers2));
+		//	while (!(pers2.length == pointerPers2)){
+		//		result[pointerResult] = pers2[pointerPers2];
+		//		pointerPers2++;
+		//		pointerResult++;
+		//	}
 		} else{
-			while (!(pers1.length == pointerPers1)){
-				result[pointerResult] = pers1[pointerPers1];
-				pointerPers1++;
-				pointerResult++;
-			}
+			System.arraycopy(pers1, pointerPers1, result, pointerResult, (pers1.length - pointerPers1));
+		//	while (!(pers1.length == pointerPers1)){
+		//		result[pointerResult] = pers1[pointerPers1];
+		//		pointerPers1++;
+		//		pointerResult++;
+		//	}
+
+
 		}
 
+
+		//         int[] firstArray = {23,45,12,78,4,90,1};        //source array
+		//        int[] secondArray = {77,11,45,88,32,56,3};  //destination array
+		//        int fal = firstArray.length;        //determines length of firstArray
+		//        int sal = secondArray.length;   //determines length of secondArray
+		//        int[] result = new int[fal + sal];  //resultant array of size first array and second array
+		//
+		//        System.arraycopy(firstArray, 0, result, 0, fal);
+		//        System.arraycopy(secondArray, 0, result, fal, sal);
+		//
+		//
+		//        System.out.println(Arrays.toString(result));    //prints the resultant array
 
 		System.out.println("\t\tEND of METHOD");
 		System.out.println("\tPERSONEN 1 ARRAY");
@@ -153,17 +159,7 @@ public class MergeSort implements PersonenSort {
 
 
 
-		//         int[] firstArray = {23,45,12,78,4,90,1};        //source array
-		//        int[] secondArray = {77,11,45,88,32,56,3};  //destination array
-		//        int fal = firstArray.length;        //determines length of firstArray
-		//        int sal = secondArray.length;   //determines length of secondArray
-		//        int[] result = new int[fal + sal];  //resultant array of size first array and second array
-		//
-		//        System.arraycopy(firstArray, 0, result, 0, fal);
-		//        System.arraycopy(secondArray, 0, result, fal, sal);
-		//
-		//
-		//        System.out.println(Arrays.toString(result));    //prints the resultant array
+
 
 
 		// 2 arrays position für position vergleichen
