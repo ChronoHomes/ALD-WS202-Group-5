@@ -99,6 +99,8 @@ public class MergeSort implements PersonenSort {
 		}
 
 
+		//TODO - check if Arrays.copyOf(T[], int) or copyOfRange() can be used instead of System.arraycopy
+		// assuming arraycopy is faster than copying through a loop
 		if (pers1.length == pointerPers1){
 			System.arraycopy(pers2, pointerPers2, result, pointerResult, (pers2.length - pointerPers2));
 		//	while (!(pers2.length == pointerPers2)){
