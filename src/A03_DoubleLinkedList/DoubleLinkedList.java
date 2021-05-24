@@ -202,7 +202,7 @@ public class DoubleLinkedList<T>
      * @throws CurrentNotSetException
      */
     /** Big O notation -> O(1) */
-    public void removeCurrent() throws CurrentNotSetException {     // TODO - merge remove() & removeCurrent() to since both are almost the same
+    public void removeCurrent() throws CurrentNotSetException {     // TODO - merge remove() & removeCurrent() to since both are almost the same or create helper function
 
         if (current == null) throw new CurrentNotSetException();
 
