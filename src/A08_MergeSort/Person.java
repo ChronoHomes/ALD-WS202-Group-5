@@ -32,4 +32,12 @@ public class Person {
 
 		return comp;
 	}
+
+	@Override
+	public String toString() {
+		return "Person{" +
+				"nachname='" + nachname + '\'' +
+				", vorname='" + vorname + '\'' +
+				'}';
+	}
 }
