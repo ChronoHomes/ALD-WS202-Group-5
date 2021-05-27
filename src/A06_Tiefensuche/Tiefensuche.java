@@ -22,7 +22,7 @@ public class Tiefensuche extends BaseTree<Film> {
 	 * @param node Wurzelknoten des Teilbaums
 	 * @return Liste der Titel in symmetrischer Reihenfolge
 	 */
-	/** Big O notation -> O() */ // TODO - ADD O notation --> O(V+E)
+	/** Big O notation -> O(V+E) */
 	public List<String> getNodesInOrder(Node<Film> node) {
 
 		List<String> list = new ArrayList<>();		// create new list to store film title
@@ -43,9 +43,8 @@ public class Tiefensuche extends BaseTree<Film> {
 	 * @param max Maximale Länge des Spielfilms
 	 * @return Liste der Filmtitel in Hauptreihenfolge
 	 */
-	/** Big O notation -> O() */ //TODO - ADD O notation
+	/** Big O notation -> O(V+E) */
 	public List<String> getMinMaxPreOrder(double min, double max) {
-		//printTree();
 		return getMinMaxPreOrder(min, max, root);	// call method recursive with min & max from method parameter and the root
 	}
 
