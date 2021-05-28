@@ -21,7 +21,7 @@ public class Wörterbuch {
 	 * @param w Wort
 	 * @return Zahl der Wörter (=Anzahl der Elemente)
 	 */
-	/** Big O notation -> O(log(n)) */
+
 	public int countWordsInSubTree(Wort w) {
 
 		if (w == null)  // terminate recursion
