@@ -68,6 +68,9 @@ public class Breitensuche extends BaseTree<Integer> {
 
 			if (tmpNode.getLevel() == level)			// check if level of node is target level from method parameter
 				levelList.add(tmpNode.getValue());		// if it is add it to the list which is returned from the method
+
+
+			//TODO: Optimierung -> check if level is greater than needed level -> if yes to not add to queue
 		}
 
 		return levelList;	// return complete list of of level
