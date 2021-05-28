@@ -35,12 +35,11 @@ public class Wörterbuch {
 	 * @param prefix Wörter müssen diesen Präfix haben
 	 * @return Menge aller zutreffenden Wörter
 	 */
-	/** Big O notation -> O(log(n)) */
+
 	public Set<String> getWordsWithPrefix(String prefix) {
 		return getWordsWithPrefix(prefix, root);		//
 	}
 
-	/** Big O notation -> O(log(n)) */
 	public Set<String> getWordsWithPrefix(String prefix, Wort wort) { // overloading method with additional parameter -> otherwise recursive call not possible
 		Set<String> set = new HashSet<>();
 
