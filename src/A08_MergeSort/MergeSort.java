@@ -59,7 +59,7 @@ public class MergeSort implements PersonenSort {
 		int pointerResult = start;
 
 		while (!(pers1.length == pointerP1 || pers2.length == pointerP2)){	// loop while non of the pointer has reached the final element of it's array
-			if (pers1[pointerP1].compareTo(pers2[pointerP2]) > 0 ){			// check if current (pointerP1) element form pers1 array is greater than the current element from pers2 array
+			if (pers1[pointerP1].compareTo(pers2[pointerP2]) > 0 ){			// check if current (pointerP1) element from pers1 array is greater than the current element from pers2 array against > 0
 				result[pointerResult] = pers2[pointerP2];					// put element from pers2 array in the result array
 				pointerP2++;												// move pointer of the 2nd array to the next element
 
