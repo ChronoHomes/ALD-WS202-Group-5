@@ -21,7 +21,7 @@ public class Wörterbuch {
 	 * @param w Wort
 	 * @return Zahl der Wörter (=Anzahl der Elemente)
 	 */
-
+	/** Big O notation -> O(V+E) / O(n) */ //TODO -> confirm
 	public int countWordsInSubTree(Wort w) {
 
 		if (w == null)  // terminate recursion
@@ -35,7 +35,7 @@ public class Wörterbuch {
 	 * @param prefix Wörter müssen diesen Präfix haben
 	 * @return Menge aller zutreffenden Wörter
 	 */
-
+	/** Big O notation -> O(V+E) / O(n) */ //TODO -> confirm
 	public Set<String> getWordsWithPrefix(String prefix) {
 		return getWordsWithPrefix(prefix, root);		//
 	}
