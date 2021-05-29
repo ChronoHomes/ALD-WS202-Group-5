@@ -23,7 +23,7 @@ public class MergeSort implements PersonenSort {
 	public void sort(Person[] personen, int start, int end)
 	{
 		/*
-		// to be deleted -> test with default sort
+		// test
 		List<Person> list = Arrays.asList(personen);
 		Comparator<Person> nameComparator = Comparator.comparing(Person::getNachname).thenComparing(Person::getVorname);
 		list.sort(nameComparator);
@@ -54,26 +54,26 @@ public class MergeSort implements PersonenSort {
 	 */
 	public void merge(Person[] pers1, Person[] pers2, Person[] result, int start) {
 
-		int pointerPers1 = 0;
-		int pointerPers2 = 0;
+		int pointerP1 = 0;
+		int pointerP2 = 0;
 		int pointerResult = start;
 
-		while (!(pers1.length == pointerPers1 || pers2.length == pointerPers2)){
-			if (pers1[pointerPers1].compareTo(pers2[pointerPers2]) > 0 ){
-				result[pointerResult] = pers2[pointerPers2];
-				pointerPers2++;
+		while (!(pers1.length == pointerP1 || pers2.length == pointerP2)){	// loop while non of the pointer has reached the final element of it's array
+			if (pers1[pointerP1].compareTo(pers2[pointerP2]) > 0 ){			// check if current (pointerP1) element form pers1 array is greater than the current element from pers2 array
+				result[pointerResult] = pers2[pointerP2];					// put element from pers2 array in the result array
+				pointerP2++;												// move pointer of the 2nd array to the next element
 
 			} else {
-				result[pointerResult] = pers1[pointerPers1];
-				pointerPers1++;
+				result[pointerResult] = pers1[pointerP1];					// put element from pers1 array in the result array
+				pointerP1++;												// move pointer of the 1st array to the next element
 			}
-			pointerResult++;
+			pointerResult++;												// update result pointer for next iteration
 		}
 
-		if (pers1.length == pointerPers1)
-			System.arraycopy(pers2, pointerPers2, result, pointerResult, (pers2.length - pointerPers2));
+		if (pers1.length == pointerP1)		// check if array pers1 or pers2 has still remaining elements, which must be moved to result array
+			System.arraycopy(pers2, pointerP2, result, pointerResult, (pers2.length - pointerP2)); 	// copy rest of array to result array // optional add rest of array via loop
 		else
-			System.arraycopy(pers1, pointerPers1, result, pointerResult, (pers1.length - pointerPers1));
+			System.arraycopy(pers1, pointerP1, result, pointerResult, (pers1.length - pointerP1));	// copy rest of array to result array
 	}
 
 }
