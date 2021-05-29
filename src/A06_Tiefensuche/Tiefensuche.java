@@ -55,14 +55,16 @@ public class Tiefensuche extends BaseTree<Film> {
 		if (node == null)		// termination of recursion
 			return list;
 
-		if (node.getValue().getLänge() > min && node.getValue().getLänge() < max)    // check if duration is within min & max parameter
+		if (node.getValue().getLänge() > min && node.getValue().getLänge() < max)     // check if duration is within min & max parameter
 			list.add(node.getValue().getTitel());                                    // if it is add to list
 
-			list.addAll(getMinMaxPreOrder(min, max, node.getLeft()));                    // call method recursive on left leave
-			list.addAll(getMinMaxPreOrder(min, max, node.getRight()));                   // call method recursive on right leave
+
+		list.addAll(getMinMaxPreOrder(min, max, node.getLeft()));                    // call method recursive on left leave
+		list.addAll(getMinMaxPreOrder(min, max, node.getRight()));                   // call method recursive on right leave
 
 
-		//TODO: Optimierung -> for better performance check if "FILM" is within length
+
+		//TODO: Optimierung -> for better performance check if "FILM" is within length only then call function(?)
 
 		return list;
 	}
