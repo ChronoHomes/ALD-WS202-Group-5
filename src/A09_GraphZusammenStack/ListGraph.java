@@ -1,7 +1,6 @@
-package A09_GraphZusammen;
+package A09_GraphZusammenStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ListGraph implements Graph {

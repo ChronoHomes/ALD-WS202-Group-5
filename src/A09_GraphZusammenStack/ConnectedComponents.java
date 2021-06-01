@@ -1,11 +1,7 @@
-package A09_GraphZusammen;
+package A09_GraphZusammenStack;
 
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import java.util.Stack;
-import java.util.stream.Stream;
 
 public class ConnectedComponents {
 

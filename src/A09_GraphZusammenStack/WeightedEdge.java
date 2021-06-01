@@ -1,4 +1,4 @@
-package A09_GraphZusammen;
+package A09_GraphZusammenStack;
 
 public class WeightedEdge {
 	public int from_vertex;
