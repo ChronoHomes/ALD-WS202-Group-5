@@ -10,6 +10,7 @@ public class ConnectedComponents {
 	 * @param graph zu prüfender Graph
 	 * @return Anzahl der Komponenten
 	 */
+	//TODO - LAUFZEIT
 	public int getNumberOfComponents(Graph graph) {
 
 		// Graph (V,E) -> (Vertices (Nodes) , Edges)

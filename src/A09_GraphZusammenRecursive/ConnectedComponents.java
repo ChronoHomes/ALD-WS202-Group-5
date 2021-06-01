@@ -12,6 +12,7 @@ public class ConnectedComponents {
 	 * @param graph zu prüfender Graph
 	 * @return Anzahl der Komponenten
 	 */
+	//TODO - LAUFZEIT
 	public int getNumberOfComponents(Graph graph) {
 
 		int components = 0;							// initialize number of components with 0

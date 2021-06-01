@@ -16,6 +16,7 @@ public class Zyklen {
 	 * @param g zu prüfender Graph
 	 * @return Anzahl der Komponenten
 	 */
+	//TODO - LAUFZEIT
 	public List<Integer> getCycle() {
 
 		return null;
