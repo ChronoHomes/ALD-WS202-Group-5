@@ -2,15 +2,16 @@ package A11_DijkstraPQShortestPath;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class FindWay {
 	protected Graph graph;
-	protected int[] pred;
+	protected int[] predecessor;
 	
 	public FindWay(Graph graph) {
 		this.graph = graph;
-		this.pred = new int[graph.numVertices()];
+		this.predecessor = new int[graph.numVertices()];
 	}
 
 	/**
@@ -44,10 +45,19 @@ public abstract class FindWay {
 	 * @return Weg als Liste
 	 */
 	protected ArrayList<Integer> createWay(int from, int to) {
-		ArrayList<Integer> way = new ArrayList<Integer>();
 
-		// TODO: IHRE IMPLEMENTIERUNG
+		if(predecessor[to] == -1)	// if predecessor of target (to) is -1 then no path was found -> return null
+			return null;
 
+		ArrayList<Integer> way = new ArrayList<>();
+		way.add(to);
+		int tmp = to;
+
+		while (tmp != from) {			// go from target (to) through the predecessors until the starting point (from) is reached
+			way.add(predecessor[tmp]);
+			tmp = predecessor[tmp];
+		}
+		Collections.reverse(way);	// reverse list to have to and from in the right order
 		return way;
 	}
 }
