@@ -24,9 +24,6 @@ public class ListGraph implements Graph {
 		this.numVertices = numVertices;
 		this.directed = directed;
 		
-		
-		
-		
 	}
 	
 	public int numVertices() {
