@@ -26,7 +26,6 @@ public class ConnectedComponents {
 													// therefore if statement will only be true for the number of components in the graph
 			}
 		}
-
 		return components;
 	}
 
@@ -37,9 +36,7 @@ public class ConnectedComponents {
 
 		visited[vertex] = true;									// mark vertex as visited in array
 
-		List<WeightedEdge> edges = graph.getEdges(vertex);		// get all edges from current vertex
-		
-		for (WeightedEdge edge : edges) {						// loop through edges
+		for (WeightedEdge edge :  graph.getEdges(vertex)) {		// loop through all edges from current vertex
 			depthFirstSearchRecursive(graph, edge.to_vertex);	// call for each edge DFS method based on
 																// complete graph and vertex where the edge was connected to
 		}
