@@ -7,9 +7,7 @@ import org.junit.Test;
 
 public class PersonenSortTest {
 
-	// TODO - check if is okay to create "new BubbleSort()" here
-	//protected PersonenSort ps; // -> original
-	protected PersonenSort ps = new BubbleSort();
+	protected PersonenSort ps;
 	
 	protected Person[] personen;
 	
