@@ -6,7 +6,7 @@ public class BubbleSort implements PersonenSort {
 	/**
 	 * Sortier-Funktion
 	 */
-	/** Big O notation -> O(n²) */ // O(n²/2) ??? exact // Best case O(n)
+	/** Big O notation -> O(n²) */
 	public void sort(Person[] personen) {
 
 		Person tmpPerson;			// temporary helper for sorting process
