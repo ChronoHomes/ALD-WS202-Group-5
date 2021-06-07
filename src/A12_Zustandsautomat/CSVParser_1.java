@@ -1,7 +1,11 @@
 package A12_Zustandsautomat;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class CSVParser_1 {
 
+	private static final String SEPARATOR = ",";
 	/**
 	 * Implementierung des Automaten mit einem switch()-Statement
 	 * für jeden Status des Automaten.
@@ -11,16 +15,30 @@ public class CSVParser_1 {
 	public static CSVResult parse(String str) {
 		
 		int state = 0;
-		
-		for (int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
 
-			System.out.println("c: " + (char)c);
-			
+		System.out.println("Input String: " + str);
+
+		for (String line : str.split("\n|\r")) {
+			if (!line.trim().isEmpty())
+				System.out.println("Carriage return found:" + line.trim());
+		}
+
+
+		//	System.out.println("str.length: " + str.length());
+		//	String[] split = str.split(SEPARATOR);
+		//	System.out.println("Arrays.toString(split): " + Arrays.toString(split));
+
+/*
+		for (int i = 0; i < str.length(); i++) {
+
+			char c = str.charAt(i);
+			System.out.println(c);
+
 			switch(state) {
 
 			} // switch end
 		}
+ */
 		
 		return null;
 	}
