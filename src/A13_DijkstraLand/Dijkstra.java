@@ -73,7 +73,6 @@ public class Dijkstra {
 		Collections.reverse(way);	// reverse list to have to and from in the right order
 		return way;
 
-		// TODO fin
 	}
 	
 
