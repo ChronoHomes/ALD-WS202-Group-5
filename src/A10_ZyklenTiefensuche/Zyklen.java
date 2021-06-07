@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Zyklen {
 
-	private Graph graph;
-	private boolean visited[];	// array to maintain visited vertices
-	private HashMap<Integer, Integer> predecessorMap = new HashMap<>();
-
+	private final Graph graph;
+	private boolean[] visited;	// array to maintain visited vertices
+	private final HashMap<Integer, Integer> predecessors = new HashMap<>();
+	private List<Integer> cycleInGraph = new ArrayList<>();
 
 	public Zyklen(Graph g) {
 		this.graph = g;
@@ -22,21 +22,21 @@ public class Zyklen {
 	 */
 	public List<Integer> getCycle() {
 
-		if (graph.numVertices() <= 2 && !graph.isDirected()) // no cycle possible if vertices count smaller or equal to 2 and if graph is undirected
+		if (graph.numVertices() <= 2 && !graph.isDirected()) 				// no cycle possible if vertices count smaller or equal to 2 if graph is undirected
 			return null;
 
-		visited = new boolean[graph.numVertices()];		// set size of array - per default all values are set to false
+		visited = new boolean[graph.numVertices()];							// set size of visited array - per default all values are set to false
 
-		for (int i=0; i < graph.numVertices(); i++) {	// loop through all vertices in graph
-			if (!visited[i]) {							// check if vertex has not been visited yet
-				List<Integer> cycleWithinGraph = recursiveGetCycle(i, -1); // call of recursive method
-				if (cycleWithinGraph != null) { 		// cycle found
-					System.out.println(cycleWithinGraph);
-					return cycleWithinGraph;
+		for (int i = 0; i < graph.numVertices(); i++) {						// loop through all vertices in graph
+			if (!visited[i]) {												// check if vertex has not been visited yet
+				cycleInGraph = recursiveGetCycle(i, -1); 		// call of recursive method
+				if (cycleInGraph != null) { 								// cycle has been found
+					//System.out.println("method getCycle: " + cycleInGraph);
+					return cycleInGraph;
 				}
 			}
 		}
-		return null; // no cycle found -> return null
+		return null; 														// no cycle found -> return null
 	}
 	/**
 	 * Rekurisve Funktion zum Suchen des Zyklus
@@ -49,44 +49,42 @@ public class Zyklen {
 
 	private List<Integer> recursiveGetCycle(int vertex, int predecessor) {
 
-		//TODO - improve variable naming
-
-		List<Integer> cycleGraph = new ArrayList<>();
-
-		if (predecessorMap.containsKey(vertex)) {
-			Integer tmp = vertex;
-
-			while (tmp != null){
-				cycleGraph.add(tmp);
-				tmp = predecessorMap.get(tmp);
+		cycleInGraph = new ArrayList<>();
+		if (predecessors.containsKey(vertex)) {		// check if vertex is predecessor
+			Integer tmp = vertex;					// store vertex as temporary variable
+													// wrapper class for int needed for "!= null" condition
+			while (tmp != null){					// loop through predecessors
+				cycleInGraph.add(tmp);				// add node to cycle list
+				tmp = predecessors.get(tmp);		// set new predecessor based on current predecessor
 			}
-			cycleGraph.add(vertex);
-			System.out.println("cycleGraph" + cycleGraph);
-			return cycleGraph;
+
+			cycleInGraph.add(vertex);				// add vertex as last node to list -> first and last must be equal
+
+			//System.out.println("cycleInGraph" + cycleInGraph);
+			return cycleInGraph;					// return list with nodes
 		}
 
+		if (visited[vertex])		// check if was node already visited
+			return null;			// if it was return from method
 
-		if (visited[vertex])	// node already visited
-			return null;
+		visited[vertex] = true;					// mark node as visited with "true"
 
-		visited[vertex] = true;
+		predecessors.put(predecessor, vertex); 	// add predecessor to list
 
-
-		predecessorMap.put(predecessor, vertex); // add predecessor to list
-
-		for (WeightedEdge edge : graph.getEdges(vertex)) { // loop through all edges
-			if (edge.to_vertex == predecessor && !graph.isDirected()) { // undirected graph
-				continue;
+		for (WeightedEdge edge : graph.getEdges(vertex)) { 						// loop through all edges of vertex from current recursive call
+			if (!(edge.to_vertex == predecessor && !graph.isDirected())) { 		// check if edge to vertex equals the predecessor from recursive call
+																				// and graph is not directed is not true
+				cycleInGraph = recursiveGetCycle(edge.to_vertex, vertex); 		// recursive call based on vertex which is a predecessor of next vertex (=to_vertex)
+				if (cycleInGraph != null) { 									// cycle has been found
+					//System.out.println("cycleInGraph" + cycleInGraph);
+					return cycleInGraph;
+				}
 			}
-			List<Integer> cycle = recursiveGetCycle(edge.to_vertex, vertex); // recursive call
-			if (cycle != null) { // cycle found
-				System.out.println("cycle" + cycle);
-				return cycle;
-			}
+
 		}
 
-		predecessorMap.remove(predecessor); // remove predecessor -> backtracking
-		System.out.println("end of recursive method");
+		predecessors.remove(predecessor); // remove predecessor (=backtracking)
+
 		return null; // no cycle found -> return null
 	}
 
