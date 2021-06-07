@@ -15,7 +15,7 @@ public class CSVParser_1 {
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 
-			System.out.println("c: " + c);
+			System.out.println("c: " + (char)c);
 			
 			switch(state) {
 
