@@ -81,6 +81,7 @@ public class CSVParser_1 {
 
 
 			} else {
+				System.out.println("###################### " + isTextData(c) + " ###################################");
 				result.appendChar(c);
 				quote = false;
 			}
