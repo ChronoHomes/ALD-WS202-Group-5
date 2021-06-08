@@ -18,29 +18,36 @@ public class CSVParser_1 {
 
 		System.out.println("Input String: " + str);
 
-		for (String line : str.split("\n|\r")) {
-			if (!line.trim().isEmpty())
-				System.out.println("Carriage return found:" + line.trim());
-		}
+//		for (String line : str.split("\n|\r")) {
+//			if (!line.trim().isEmpty())
+//				System.out.println("Carriage return found:" + line.trim());
+//		}
 
 
 		//	System.out.println("str.length: " + str.length());
 		//	String[] split = str.split(SEPARATOR);
 		//	System.out.println("Arrays.toString(split): " + Arrays.toString(split));
 
-/*
+
 		for (int i = 0; i < str.length(); i++) {
 
 			char c = str.charAt(i);
-			System.out.println(c);
+			System.out.println((int)c);
+
+			//-> cast char to int and build on that the statemachine
 
 			switch(state) {
 
 			} // switch end
 		}
- */
-		
-		return null;
+
+
+		CSVResult result = new CSVResult();
+		result.appendChar('1');
+		result.appendChar('2');
+		result.appendChar('3');
+		result.addValue();
+		return result;
 	}
 	
 	private static boolean isTextData(char c) {
