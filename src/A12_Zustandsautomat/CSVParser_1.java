@@ -39,7 +39,7 @@ public class CSVParser_1 {
 			if ((int) c == COMMA) {
 
 				if(!(badCharCount % 2 == 0)) {
-					result = CSVResult.ERROR; // set error -> last two are passed then
+					result = CSVResult.ERROR;
 					break;
 				}
 
@@ -77,6 +77,7 @@ public class CSVParser_1 {
 
 
 			} else {
+				System.out.println("###################### " + isTextData(c) + " ###################################");
 				result.appendChar(c);
 				quote = false;
 			}
