@@ -38,6 +38,8 @@ public class CSVParser_1 {
 		CSVResult result = new CSVResult();
 
 		boolean quote = false;
+
+
 		int quoteCount = 0;
 		int badCharCount = 0;
 		int lastAscii = -1;
