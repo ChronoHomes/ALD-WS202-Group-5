@@ -2,10 +2,11 @@ package A12_Zustandsautomat;
 
 public class CSVParser_1 {
 
-	private static final int COMMA = ',';			// comma ',' - 44
-	private static final int LF = '\n';				// line feed '\n' - 10
-	private static final int CR = '\r'; 			// carriage return '\r' - 13
-	private static final int QUOTATION_MARK = '\"';	// quotation marks '\"' - 34
+	private static final int COMMA = ',';		// comma ',' - 44
+	private static final int CR = '\r'; 		// carriage return '\r' - 13
+	private static final int LF = '\n';			// line feed '\n' - 10
+	private static final int QUOTE = '\"';		// quotation marks '\"' - 34
+	private static final int TAB = '\t';		// tab '\t' - 9
 	/**
 	 * Implementierung des Automaten mit einem switch()-Statement
 	 * für jeden Status des Automaten.
@@ -13,22 +14,19 @@ public class CSVParser_1 {
 	 * @return Entweder Fehler-Objekt oder Zahl-Objekt
 	 */
 	public static CSVResult parse(String str) {
-		
+
+		//TODO - handle states with enum !?
 		int state = 0;
 
-		System.out.println(COMMA + " " + LF + " " + CR + " " + QUOTATION_MARK);
+		System.out.println(COMMA + " " + LF + " " + CR + " " + QUOTE + " " + TAB);
 
 		System.out.println("Input String: " + str + " length: " + str.length());
 
-
-		//	System.out.println("str.length: " + str.length());
-		//	String[] split = str.split(SEPARATOR);
-		//	System.out.println("Arrays.toString(split): " + Arrays.toString(split));
-
 		CSVResult result = new CSVResult();
 
-
 		boolean quote = false;
+		int quoteCount = 0;
+		int badCharCount = 0;
 
 		for (int i = 0; i < str.length(); i++) {
 
@@ -37,13 +35,32 @@ public class CSVParser_1 {
 
 
 			if ((int) c == COMMA) {
+
+				if(!(badCharCount % 2 == 0)) {
+					result = CSVResult.ERROR; // set error -> last two are passed then
+					break;
+				}
+
 				result.addValue();
-				quote = false;
-			} else if (((int) c == LF || (int) c == CR) && (str.length()-1 == i || str.length()-2 == i)){
+				badCharCount = 0;
+
 				quote = false;
 
-			} else if ((int) c == QUOTATION_MARK){
+			} else if ((int) c == CR || (int) c == LF || (int) c == TAB){
 
+				System.out.println("le dot");
+				badCharCount++;
+				if (((int) c == LF || (int) c == CR) && (str.length()-1 == i || str.length()-2 == i)) {
+					quote = false;
+				} else {
+					result.appendChar(c);
+				}
+
+		//	} else if (((int) c == LF || (int) c == CR) && (str.length()-1 == i || str.length()-2 == i)){
+		//		quote = false;
+
+			} else if ((int) c == QUOTE){
+				quoteCount++;
 				//System.out.println("i: " + i + " char: " + c);
 
 				if (quote){
@@ -56,14 +73,7 @@ public class CSVParser_1 {
 					quote = true;
 				}
 
-		//	} else if (!isTextData(c)){
-		//		result = CSVResult.ERROR;
-		//		break;
 
-			} else if ((int) c == '\t'){ // tryout
-				System.out.println("here?");
-				result = CSVResult.ERROR;
-				break;
 			} else {
 				result.appendChar(c);
 				quote = false;
@@ -75,10 +85,17 @@ public class CSVParser_1 {
 
 		}
 
+		System.out.println("badCharCount: " + badCharCount);
+
 		if (!result.hasError())
 			result.addValue();
 
-		//result = CSVResult.ERROR; // set error -> last two are passed then
+		if(!(badCharCount % 2 == 0)) {
+			result = CSVResult.ERROR;
+		}
+		if(!(quoteCount % 2 == 0)) {
+			result = CSVResult.ERROR;
+		}
 
 		return result;
 	}
