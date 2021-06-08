@@ -1,11 +1,11 @@
 package A12_Zustandsautomat;
 
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class CSVParser_1 {
 
-	private static final char SEPARATOR = ',';
+	private static final int COMMA = ',';			// comma ',' - 44
+	private static final int LF = '\n';				// line feed '\n' - 10
+	private static final int CR = '\r'; 			// carriage return '\r' - 13
+	private static final int QUOTATION_MARK = '\"';	// quotation marks '\"' - 34
 	/**
 	 * Implementierung des Automaten mit einem switch()-Statement
 	 * für jeden Status des Automaten.
@@ -16,7 +16,9 @@ public class CSVParser_1 {
 		
 		int state = 0;
 
-		System.out.println("Input String: " + str);
+		System.out.println(COMMA + " " + LF + " " + CR + " " + QUOTATION_MARK);
+
+		System.out.println("Input String: " + str + " length: " + str.length());
 
 
 		//	System.out.println("str.length: " + str.length());
@@ -26,43 +28,58 @@ public class CSVParser_1 {
 		CSVResult result = new CSVResult();
 
 
+		boolean quote = false;
 
 		for (int i = 0; i < str.length(); i++) {
 
 			char c = str.charAt(i);
-			int ascii = (int) c;
-			System.out.println("isTextData: " + isTextData(c));
-			System.out.println((int) c);
+			System.out.println("char: " + c + " int: " + (int) c + " isTextData: " + isTextData(c));
 
 
-
-			if (ascii == 10 || ascii == 13){
-				System.out.println("do nothing"); // CRLF
-			} else if (ascii == 44){
+			if ((int) c == COMMA) {
 				result.addValue();
-			} else if (ascii == 34){ // "
+				quote = false;
+			} else if (((int) c == LF || (int) c == CR) && (str.length()-1 == i || str.length()-2 == i)){
+				quote = false;
 
+			} else if ((int) c == QUOTATION_MARK){
+
+				//System.out.println("i: " + i + " char: " + c);
+
+				if (quote){
+					if (!(i == str.length()-1)){
+						if (str.charAt(i+1) != COMMA)
+							result.appendChar(c);
+					}
+					quote = false;
+				} else {
+					quote = true;
+				}
+
+		//	} else if (!isTextData(c)){
+		//		result = CSVResult.ERROR;
+		//		break;
+
+			} else if ((int) c == '\t'){ // tryout
+				System.out.println("here?");
+				result = CSVResult.ERROR;
+				break;
 			} else {
 				result.appendChar(c);
+				quote = false;
 			}
 
 			switch(state) {
 
 			} // switch end
+
 		}
 
-		/*
-		//System.out.println((int) SEPARATOR); // -> int 44 for seperator
+		if (!result.hasError())
+			result.addValue();
 
-		//-> cast char to int and build on that the statemachine
+		//result = CSVResult.ERROR; // set error -> last two are passed then
 
-		// if length of string reached and last two elements are not 10 and 13
-		// -> we reached the end of the string (=last element)
-
-		 */
-
-
-		result.addValue();
 		return result;
 	}
 	
