@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class CSVParser_1 {
 
-	private static final String SEPARATOR = ",";
+	private static final char SEPARATOR = ',';
 	/**
 	 * Implementierung des Automaten mit einem switch()-Statement
 	 * für jeden Status des Automaten.
@@ -34,7 +34,12 @@ public class CSVParser_1 {
 			char c = str.charAt(i);
 			System.out.println((int)c);
 
+			//System.out.println((int) SEPARATOR); // -> int 44 for seperator
+
 			//-> cast char to int and build on that the statemachine
+
+			// if length of string reached and last two elements are not 10 and 13
+			// -> we reached the end of the string (=last element)
 
 			switch(state) {
 
