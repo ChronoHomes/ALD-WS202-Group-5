@@ -30,7 +30,7 @@ public class CSVParser_1 {
 		//TODO - handle states with enum !?
 		//int state = 0;
 
-		CSVParser_1_save2.States state = CSVParser_1_save2.States.UNDEFINED;
+		States state = States.UNDEFINED;
 
 		System.out.println(COMMA + " " + LF + " " + CR + " " + QUOTE + " " + TAB);
 		System.out.println("Input String: " + str + " length: " + str.length());
@@ -51,17 +51,17 @@ public class CSVParser_1 {
 			// convert char to ascii and assign value to states for readability
 			int ascii = c;
 			if (isTextData(c))
-				state = CSVParser_1_save2.States.TEXT;
+				state = States.TEXT;
 			else if (ascii == COMMA)
-				state = CSVParser_1_save2.States.COMMA;
+				state = States.COMMA;
 			else if (ascii == QUOTE)
-				state = CSVParser_1_save2.States.QUOTE;
+				state = States.QUOTE;
 			else if (ascii == LF)
-				state = CSVParser_1_save2.States.LF;
+				state = States.LF;
 			else if (ascii == CR)
-				state = CSVParser_1_save2.States.CR;
+				state = States.CR;
 			else if (ascii == TAB)
-				state = CSVParser_1_save2.States.TAB;
+				state = States.TAB;
 
 
 			if (ascii != QUOTE) // solved if previous char is stored?
