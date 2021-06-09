@@ -37,7 +37,7 @@ public class CSVParser_1 {
 			if ((int) c == COMMA) {
 
 				if(!(badCharCount % 2 == 0)) {
-					result = CSVResult.ERROR; // set error -> last two are passed then
+					result = CSVResult.ERROR;
 					break;
 				}
 
@@ -47,9 +47,13 @@ public class CSVParser_1 {
 				quote = false;
 
 			} else if ((int) c == CR || (int) c == LF || (int) c == TAB){
-
-				System.out.println("le dot");
 				badCharCount++;
+
+
+				//TODO - check if CR incoming and then LF incoming within the COMMA
+				// if only one of them is present -> FAIL
+				// or if same character is incoming again -> FAIL
+
 				if (((int) c == LF || (int) c == CR) && (str.length()-1 == i || str.length()-2 == i)) {
 					quote = false;
 				} else {
@@ -91,6 +95,7 @@ public class CSVParser_1 {
 			result.addValue();
 
 		if(!(badCharCount % 2 == 0)) {
+		//if(!(badCharCount % 2 == 0) || badCharCount == str.length() && str.length() > 0) {
 			result = CSVResult.ERROR;
 		}
 		if(!(quoteCount % 2 == 0)) {
