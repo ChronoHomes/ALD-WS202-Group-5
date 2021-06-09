@@ -131,6 +131,9 @@ public class CSVParser_1 {
 
 		System.out.println("specialCharCount: " + specialCharCount);
 
+
+		// TODO - CREATE another switch/case
+
 		if (!result.hasError())
 			result.addValue();
 
