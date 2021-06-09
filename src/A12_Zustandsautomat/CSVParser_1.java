@@ -2,6 +2,18 @@ package A12_Zustandsautomat;
 
 public class CSVParser_1 {
 
+
+	enum States { //TODO check if this is the right way to define it....
+		TEXT,
+		COMMA,
+		CR,
+		LF,
+		QUOTE,
+		TAB,
+		UNDEFINED
+	}
+
+	// TODO - good practice to have same name as enum???
 	private static final int COMMA = ',';		// comma ',' - 44
 	private static final int CR = '\r'; 		// carriage return '\r' - 13
 	private static final int LF = '\n';			// line feed '\n' - 10
@@ -16,19 +28,19 @@ public class CSVParser_1 {
 	public static CSVResult parse(String str) {
 
 		//TODO - handle states with enum !?
-		int state = 0;
+		//int state = 0;
+
+		CSVParser_1_save2.States state = CSVParser_1_save2.States.UNDEFINED;
 
 		System.out.println(COMMA + " " + LF + " " + CR + " " + QUOTE + " " + TAB);
-
 		System.out.println("Input String: " + str + " length: " + str.length());
 
 		CSVResult result = new CSVResult();
 
 		boolean quote = false;
-
-
 		int quoteCount = 0;
 		int badCharCount = 0;
+		int lastAscii = -1;
 
 		for (int i = 0; i < str.length(); i++) {
 
@@ -36,57 +48,86 @@ public class CSVParser_1 {
 			System.out.println("char: " + c + " int: " + (int) c + " isTextData: " + isTextData(c));
 
 
-			if ((int) c == COMMA) {
+			// convert char to ascii and assign value to states for readability
+			int ascii = c;
+			if (isTextData(c))
+				state = CSVParser_1_save2.States.TEXT;
+			else if (ascii == COMMA)
+				state = CSVParser_1_save2.States.COMMA;
+			else if (ascii == QUOTE)
+				state = CSVParser_1_save2.States.QUOTE;
+			else if (ascii == LF)
+				state = CSVParser_1_save2.States.LF;
+			else if (ascii == CR)
+				state = CSVParser_1_save2.States.CR;
+			else if (ascii == TAB)
+				state = CSVParser_1_save2.States.TAB;
 
-				if(!(badCharCount % 2 == 0)) {
-					result = CSVResult.ERROR;
-					break;
-				}
 
-				result.addValue();
-				badCharCount = 0;
-
+			if (ascii != QUOTE) // solved if previous char is stored?
 				quote = false;
 
-			} else if ((int) c == CR || (int) c == LF || (int) c == TAB){
 
-				System.out.println("le dot");
-				badCharCount++;
-				if (((int) c == LF || (int) c == CR) && (str.length()-1 == i || str.length()-2 == i)) {
-					quote = false;
-				} else {
-					result.appendChar(c);
-				}
-
-		//	} else if (((int) c == LF || (int) c == CR) && (str.length()-1 == i || str.length()-2 == i)){
-		//		quote = false;
-
-			} else if ((int) c == QUOTE){
-				quoteCount++;
-				//System.out.println("i: " + i + " char: " + c);
-
-				if (quote){
-					if (!(i == str.length()-1)){
-						if (str.charAt(i+1) != COMMA)
-							result.appendChar(c);
-					}
-					quote = false;
-				} else {
-					quote = true;
-				}
-
-
-			} else {
-				System.out.println("###################### " + isTextData(c) + " ###################################");
-				result.appendChar(c);
-				quote = false;
-			}
 
 			switch(state) {
 
-			} // switch end
+				case TEXT: // +++++++++++++++++++++++++++++++ TEXT +++++++++++++++++++++++++++++++
+					result.appendChar(c);
+					break;
+
+				case COMMA: // +++++++++++++++++++++++++++++++ COMMA +++++++++++++++++++++++++++++++
+					if(!(badCharCount % 2 == 0))
+						result = CSVResult.ERROR;
+
+					result.addValue();
+					badCharCount = 0;
+					break;
+
+				case QUOTE: // +++++++++++++++++++++++++++++++ QUOTE +++++++++++++++++++++++++++++++
+					quoteCount++;
+					//			if (lastAscii == COMMA){
+					//			}
+					if (quote) {
+						if (!(i == str.length() - 1)) {
+							if (str.charAt(i + 1) != COMMA)
+								result.appendChar(c);
+						}
+						quote = false;
+					} else {
+						quote = true;
+					}
+					break;
+
+				case CR: // +++++++++++++++++++++++++++++++ CR +++++++++++++++++++++++++++++++
+					badCharCount++;
+
+					if (!(str.length()-2 == i))
+						result.appendChar(c);
+
+					break;
+
+				case LF: // +++++++++++++++++++++++++++++++ LF +++++++++++++++++++++++++++++++
+					badCharCount++;
+
+					if (!(str.length()-1 == i))
+						result.appendChar(c);
+
+					break;
+
+				case TAB:	// +++++++++++++++++++++++++++++++ TAB +++++++++++++++++++++++++++++++
+					badCharCount++;
+					result.appendChar(c);
+					break;
+
+				default:
+					System.out.println("Input could not be parsed!");
+					result = CSVResult.ERROR; //???
+			}
+
+			lastAscii = ascii;
 
 		}
+
 
 		System.out.println("badCharCount: " + badCharCount);
 
@@ -102,7 +143,7 @@ public class CSVParser_1 {
 
 		return result;
 	}
-	
+
 	private static boolean isTextData(char c) {
 		// aus RFC TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E
 		// in Abweichung zum RFC werden alle Zeichen >=0x80 als legal betrachtet
