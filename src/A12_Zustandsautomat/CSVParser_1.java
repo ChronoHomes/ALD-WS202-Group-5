@@ -34,8 +34,10 @@ public class CSVParser_1 {
 		CSVResult result = new CSVResult();
 
 		boolean quote = false;
-		int quotationMarkCount = 0;
-		int specialCharCount = 0;
+		int countQuote = 0;
+		int countLf = 0;
+		int countCr = 0;
+
 		int lastAscii = -1;
 
 		parseLoop: for (int i = 0; i < str.length(); i++) {
@@ -62,11 +64,13 @@ public class CSVParser_1 {
 
 				case COMMA:		// +++++++++++++++++++++++++++++++ COMMA +++++++++++++++++++++++++++++++
 					result.addValue();
-					specialCharCount = 0;
+					countCr = 0;
+
+					countLf = 0;
 					break;
 
 				case QUOTE:		// +++++++++++++++++++++++++++++++ QUOTE +++++++++++++++++++++++++++++++
-					quotationMarkCount++;
+					countQuote++;
 
 					//if (lastAscii == COMMA){
 
@@ -84,9 +88,9 @@ public class CSVParser_1 {
 						quote = true;
 					}
 					break;
-				//Version 1 - working
+
 				case CR:		// +++++++++++++++++++++++++++++++ CR +++++++++++++++++++++++++++++++
-					specialCharCount++;
+					countCr++;
 
 					if (!(str.length()-2 == i))
 						result.appendChar(c);
@@ -94,26 +98,13 @@ public class CSVParser_1 {
 					break;
 
 				case LF:		// +++++++++++++++++++++++++++++++ LF +++++++++++++++++++++++++++++++
-					specialCharCount++;
+					countLf++;
 
 					if (!(str.length()-1 == i))
 						result.appendChar(c);
 
 					break;
 
-
-/*
-				//Version 2 - TEST
-				case CRLF:
-					specialCharCount++;
-					char prev = c;
-
-					if (lastAscii != CR || str.length() - 1 != i) {
-						result.appendChar(c);
-					}
-
-					break;
-*/
 				case TAB:		// +++++++++++++++++++++++++++++++ TAB +++++++++++++++++++++++++++++++
 					result = CSVResult.ERROR;	// TODO: tbc if TAB always results in an ERROR
 					break;
@@ -129,7 +120,7 @@ public class CSVParser_1 {
 		}
 
 
-		System.out.println("specialCharCount: " + specialCharCount);
+		System.out.println("countCr = " + countCr + " countLf = " + countLf);
 
 
 		// TODO - CREATE another switch/case
@@ -137,12 +128,10 @@ public class CSVParser_1 {
 		if (!result.hasError())
 			result.addValue();
 
-//		if(!(specialCharCount % 2 == 0) || specialCharCount == str.length() && str.length() > 0) {
-		if(!(specialCharCount % 2 == 0)) {
+		if (!(countCr == countLf))	// CR and LF are in pairs ?
 			result = CSVResult.ERROR;
-		}
 
-		if(!(quotationMarkCount % 2 == 0)) // Quotation Marks must be even counted over the whole input
+		if(!(countQuote % 2 == 0)) // Quotation Marks must be even counted over the whole input
 			result = CSVResult.ERROR;
 
 		return result;
@@ -175,17 +164,11 @@ public class CSVParser_1 {
 		else
 			state = States.UNDEFINED;
 
-
-	//	if (c == CR || c == LF)
-	//		state = States.CRLF;
-
 		if (result.hasError())
 			state = States.ERROR;
 
 
 		return state;
-
-
 	}
 	/*
 	private static States getState(int c, CSVResult result, String str, int i){
@@ -211,6 +194,8 @@ public class CSVParser_1 {
 
 
 		// detect CRLF ????
+	//	if (c == CR || c == LF)
+	//		state = States.CRLF;
 
 
 		if (result.hasError())
