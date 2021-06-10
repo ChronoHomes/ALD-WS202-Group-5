@@ -22,7 +22,7 @@ public class CSVParser_1 {
 	private static final int TAB = '\t';		// tab '\t' - 9
 	/**
 	 * Implementierung des Automaten mit einem switch()-Statement
-	 * f?r jeden Status des Automaten.
+	 * für jeden Status des Automaten.
 	 * @param str Zu parsende Eingabe
 	 * @return Entweder Fehler-Objekt oder Zahl-Objekt
 	 */
@@ -33,7 +33,7 @@ public class CSVParser_1 {
 		CSVResult result = new CSVResult();
 		States state;
 
-		boolean wasLastQuote = false;
+		boolean lastCharQuote = false;
 		boolean deletetLast = false;
 
 		int countQuote = 0;
@@ -44,7 +44,7 @@ public class CSVParser_1 {
 		parseLoop: for (int i = 0; i < str.length(); i++) {
 
 			char c = str.charAt(i);
-			state = getState(result, c);
+			state = getStateLoop(result, c);
 
 			//System.out.println("char: " + c + " int: " + (int) c + " isTextData: " + isTextData(c));
 
@@ -58,42 +58,31 @@ public class CSVParser_1 {
 					break;
 
 				case COMMA:		// +++++++++++++++++++++++++++++++ COMMA +++++++++++++++++++++++++++++++
+					/*
 					// more test cases if a more detailed evaluation is needed for each element before added to array
-					//	if (!(countCr == countLf)){
-					//		result = CSVResult.ERROR;
-					//		break parseLoop;
-					//	}
-					//	countLf = 0;
-					//	countCr = 0;
+						if (!(countCr == countLf)){
+							result = CSVResult.ERROR;
+							break parseLoop;
+						}
+						countLf = 0;
+						countCr = 0;
+					*/
 
-//------------------------------
-					//	if (lastChar == QUOTE)
-					//		result.appendChar((char)lastChar);
-
-					//	if (lastChar == QUOTE && countQuote % 2 == 0)
-					//		result.removeLastChar();
-
-//------------------------------
 					result.addValue();
 					break;
 
 				case QUOTE:		// +++++++++++++++++++++++++++++++ QUOTE +++++++++++++++++++++++++++++++
 					countQuote++;
 
-					if (lastChar != QUOTE)
-						wasLastQuote = false;
+					if (lastChar != QUOTE) lastCharQuote = false;
 
-					if (wasLastQuote) {
+					if (lastCharQuote) {
+						if ((i != str.length() - 1) && (str.charAt(i + 1) != COMMA)) // allowed to check next char within state machine?
+							result.appendChar(c);
+						lastCharQuote = false;
+					} else
+						lastCharQuote = true;
 
-						if (!(i == str.length() - 1)) {
-							if (str.charAt(i + 1) != COMMA)
-								result.appendChar(c);
-						}
-						wasLastQuote = false;
-
-					} else {
-						wasLastQuote = true;
-					}
 					break;
 
 				case CR:		// +++++++++++++++++++++++++++++++ CR +++++++++++++++++++++++++++++++
@@ -150,7 +139,7 @@ public class CSVParser_1 {
 		return !(c < 0x20 || c == 0x22 || c == 0x2c || c == 0x7f);
 	}
 
-	private static States getState(CSVResult result, int c) {
+	private static States getStateLoop(CSVResult result, int c) {
 
 		States state;
 
@@ -181,10 +170,10 @@ public class CSVParser_1 {
 
 		States state;
 
-		if (!result.hasError())		// no error present from loop
-			state = States.SUCCESSFUL;
-		else
+		if (result.hasError())		// no error present from loop
 			state = States.ERROR;
+		else
+			state = States.SUCCESSFUL;
 
 
 		if (!(countCr == countLf))	// same count of CR and LF (?) -> test cases to be improved if not true :)
