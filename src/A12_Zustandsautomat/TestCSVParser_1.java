@@ -142,9 +142,9 @@ public class TestCSVParser_1 {
 		assertTrue(CSVParser_1.parse("\t").hasError());
 
 	// TODO - tbc - if those are possible "badChars" example
-		assertTrue(CSVParser_1.parse("\n\n").hasError()); // added TEST
-		assertTrue(CSVParser_1.parse("\r\r").hasError()); // added TEST
-		assertTrue(CSVParser_1.parse("\t\t").hasError()); // added TEST
+		assertTrue(CSVParser_1.parse("\n\n").hasError()); // added
+		assertTrue(CSVParser_1.parse("\r\r").hasError()); // added
+		assertTrue(CSVParser_1.parse("\t\t").hasError()); // added
 	}
 	
 	@Test

@@ -23,6 +23,13 @@ public class CSVResult {
 	public void appendChar(char c) {
 		buffer.append(c);
 	}
+
+	// added for QUOTE handling -------------------------
+	public void removeLastChar(){
+		if( buffer.length() > 0 )
+			buffer.deleteCharAt(buffer.length() - 1 );
+	}
+	// --------------------------------------------------
 	
 	public void addValue() {
 		values.add(buffer.toString());
