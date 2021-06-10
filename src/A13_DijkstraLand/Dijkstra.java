@@ -53,8 +53,7 @@ public class Dijkstra {
 
 		// Way ausgeben
 		System.out.println();
-		ArrayList<Integer> way = predToWay(predecessor, from, to);
-		return way;
+		return predToWay(predecessor, from, to);
 	}
 	
 	private static ArrayList<Integer> predToWay(int[] predecessor, int from, int to) {
