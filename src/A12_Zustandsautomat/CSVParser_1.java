@@ -8,7 +8,6 @@ public class CSVParser_1 {
 		COMMA,
 		CR,
 		LF,
-		CRLF, // TODO - needed?
 		QUOTE,
 		TAB,
 		ERROR,
@@ -37,20 +36,14 @@ public class CSVParser_1 {
 		int countQuote = 0;
 		int countLf = 0;
 		int countCr = 0;
-
 		int lastAscii = -1;
 
 		parseLoop: for (int i = 0; i < str.length(); i++) {
 
 			char c = str.charAt(i);
 			States state = getState(c, result);
-			//States state = getState(c, result, str, i);
 
 			System.out.println("char: " + c + " int: " + (int) c + " isTextData: " + isTextData(c));
-
-
-			if ((int) c != QUOTE) // solved if previous char is stored?
-				quote = false;
 
 
 			switch(state) {
@@ -63,18 +56,17 @@ public class CSVParser_1 {
 					break;
 
 				case COMMA:		// +++++++++++++++++++++++++++++++ COMMA +++++++++++++++++++++++++++++++
-					result.addValue();
-					countCr = 0;
+			//		if (!(countCr == countLf))	// CR and LF are in pairs ?
+			//			result = CSVResult.ERROR;
 
-					countLf = 0;
+					result.addValue();
 					break;
 
 				case QUOTE:		// +++++++++++++++++++++++++++++++ QUOTE +++++++++++++++++++++++++++++++
 					countQuote++;
 
-					//if (lastAscii == COMMA){
-
-					//}
+					if (lastAscii != QUOTE)
+						quote = false;
 
 					if (quote) {
 
@@ -91,18 +83,14 @@ public class CSVParser_1 {
 
 				case CR:		// +++++++++++++++++++++++++++++++ CR +++++++++++++++++++++++++++++++
 					countCr++;
-
 					if (!(str.length()-2 == i))
 						result.appendChar(c);
-
 					break;
 
 				case LF:		// +++++++++++++++++++++++++++++++ LF +++++++++++++++++++++++++++++++
 					countLf++;
-
 					if (!(str.length()-1 == i))
 						result.appendChar(c);
-
 					break;
 
 				case TAB:		// +++++++++++++++++++++++++++++++ TAB +++++++++++++++++++++++++++++++
