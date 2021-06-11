@@ -2,7 +2,7 @@ package A12_Zustandsautomat;
 
 public class CSVParser_1 {
 
-	enum States { //TODO check if this is the right way to define it....
+	enum States {
 		TEXT,
 		COMMA,
 		CR,
@@ -14,7 +14,7 @@ public class CSVParser_1 {
 		UNDEFINED
 	}
 
-	// TODO - good practice to have same name for constants as for enum???
+	// TODO - good practice to have same name for constants and enum??? - probably not -> REFACTOR
 	private static final int COMMA = ',';		// comma ',' - 44
 	private static final int CR = '\r'; 		// carriage return '\r' - 13
 	private static final int LF = '\n';			// line feed '\n' - 10
@@ -78,9 +78,11 @@ public class CSVParser_1 {
 
 					if (lastCharQuote) {
 						if ((i != str.length() - 1) && (str.charAt(i + 1) != COMMA)) // allowed to check next char within state machine?
+																					 // check if NOT last element in string AND next element is NOT a comma
 							result.appendChar(c);
 						lastCharQuote = false;
-					} else
+					}
+					else
 						lastCharQuote = true;
 
 					break;
@@ -179,7 +181,7 @@ public class CSVParser_1 {
 		if (!(countCr == countLf))	// same count of CR and LF (?) -> test cases to be improved if not true :)
 			state = States.ERROR;
 
-		if(!(countQuote % 2 == 0))	// Quotation Marks must be even counted over the whole input
+		if(!(countQuote % 2 == 0))	// Quotation Marks must be even, counted over the whole input
 			state = States.ERROR;
 
 
