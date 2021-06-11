@@ -10,7 +10,7 @@ public class ConnectedComponents {
 	 * @param graph zu prüfender Graph
 	 * @return Anzahl der Komponenten
 	 */
-	//TODO - LAUFZEIT
+	/** Big O notation -> O(|V|+|E|) */
 	public int getNumberOfComponents(Graph graph) {
 
 		// Graph (V,E) -> (Vertices (Nodes) , Edges)

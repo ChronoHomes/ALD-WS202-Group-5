@@ -2,7 +2,7 @@ package A12_Zustandsautomat;
 
 public class CSVParser_1 {
 
-	enum States { //TODO check if this is the right way to define it....
+	enum States {
 		TEXT,
 		COMMA,
 		CR,
@@ -13,13 +13,14 @@ public class CSVParser_1 {
 		SUCCESSFUL,
 		UNDEFINED
 	}
-
-	// TODO - good practice to have same name for constants as for enum???
+	/*
 	private static final int COMMA = ',';		// comma ',' - 44
 	private static final int CR = '\r'; 		// carriage return '\r' - 13
 	private static final int LF = '\n';			// line feed '\n' - 10
 	private static final int QUOTE = '\"';		// quotation marks '\"' - 34
 	private static final int TAB = '\t';		// tab '\t' - 9
+	*/
+
 	/**
 	 * Implementierung des Automaten mit einem switch()-Statement
 	 * für jeden Status des Automaten.
@@ -33,8 +34,7 @@ public class CSVParser_1 {
 		CSVResult result = new CSVResult();
 		States state;
 
-		boolean lastCharQuote = false;
-		boolean deletetLast = false;
+		boolean quoteHelper = false;
 
 		int countQuote = 0;
 		int countLf = 0;
@@ -74,14 +74,15 @@ public class CSVParser_1 {
 				case QUOTE:		// +++++++++++++++++++++++++++++++ QUOTE +++++++++++++++++++++++++++++++
 					countQuote++;
 
-					if (lastChar != QUOTE) lastCharQuote = false;
+					if (lastChar != '\"') quoteHelper = false; // check if last char is not a QUOTE
 
-					if (lastCharQuote) {
-						if ((i != str.length() - 1) && (str.charAt(i + 1) != COMMA)) // allowed to check next char within state machine?
+					if (quoteHelper) {
+						if ((i != str.length() - 1) && (str.charAt(i + 1) != ','))  // check if NOT last element in string AND next element is NOT a COMMA
 							result.appendChar(c);
-						lastCharQuote = false;
-					} else
-						lastCharQuote = true;
+						quoteHelper = false;
+					}
+					else
+						quoteHelper = true;
 
 					break;
 
@@ -98,7 +99,7 @@ public class CSVParser_1 {
 					break;
 
 				case TAB:		// +++++++++++++++++++++++++++++++ TAB +++++++++++++++++++++++++++++++
-					result = CSVResult.ERROR;	// always error if TAB within string (?) -> test cases to be improved if not true :)
+					result = CSVResult.ERROR;	// always error if TAB within string (?)
 					break;
 
 				default:
@@ -147,15 +148,15 @@ public class CSVParser_1 {
 
 		if (isTextData((char) c))
 			state = States.TEXT;
-		else if (c == COMMA)
+		else if (c == ',')
 			state = States.COMMA;
-		else if (c == QUOTE)
+		else if (c == '\"')
 			state = States.QUOTE;
-		else if (c == LF)
+		else if (c == '\n')
 			state = States.LF;
-		else if (c == CR)
+		else if (c == '\r')
 			state = States.CR;
-		else if (c == TAB)
+		else if (c == '\t')
 			state = States.TAB;
 		else
 			state = States.UNDEFINED;
@@ -179,7 +180,7 @@ public class CSVParser_1 {
 		if (!(countCr == countLf))	// same count of CR and LF (?) -> test cases to be improved if not true :)
 			state = States.ERROR;
 
-		if(!(countQuote % 2 == 0))	// Quotation Marks must be even counted over the whole input
+		if(!(countQuote % 2 == 0))	// Quotation Marks must be even, counted over the whole input
 			state = States.ERROR;
 
 
