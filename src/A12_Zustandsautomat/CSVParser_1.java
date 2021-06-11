@@ -77,8 +77,7 @@ public class CSVParser_1 {
 					if (lastChar != QUOTE) lastCharQuote = false;
 
 					if (lastCharQuote) {
-						if ((i != str.length() - 1) && (str.charAt(i + 1) != COMMA)) // allowed to check next char within state machine?
-																					 // check if NOT last element in string AND next element is NOT a comma
+						if ((i != str.length() - 1) && (str.charAt(i + 1) != COMMA))  // check if NOT last element in string AND next element is NOT a comma
 							result.appendChar(c);
 						lastCharQuote = false;
 					}
