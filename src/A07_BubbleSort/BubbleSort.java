@@ -28,7 +28,6 @@ public class BubbleSort implements PersonenSort {
 								// therefore the for loop does not need to check it again
 		}
 
-
 	}
 	
 }
